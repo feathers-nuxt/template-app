@@ -1,0 +1,138 @@
+html
+  heml
+    head
+      subject  Welcome to Tendapa 
+      style.
+        .shaded {            
+            background-color: #f1f2f3;
+            border: 1px solid #fff;
+            margin: 0 33px;
+        }
+        .shaded column {
+        }
+        .shaded column .bordered {
+            border-right: 1px solid #bdbdbd;
+            margin: 33px auto;
+        }
+        .padded {
+            padding: 20px;
+        }
+        .heading {
+            max-width: 500px;
+        }
+        .subheading {
+            max-width: 250px;
+        }
+        .centered {
+            text-align: center;
+            padding: 2px;
+            margin: 0 auto;
+        }
+        .centeredpadded {            
+            text-align: center;
+            padding: 30px;
+        }
+        p.logo {
+            margin: 0;
+            padding: 10px;
+            background-color: #1f5268;
+        }
+        p.logo img {
+            margin: 0 auto;
+            height: 100px;
+        }
+        .imgholder {   
+            text-align: center;
+        }
+        .imgholder img {
+            margin: 0 auto;
+            height: 250px; 
+        }
+        container {
+            width: 100%;
+            max-width: 1200px; 
+            border: 1px solid #f7f8f9;
+            background-color: #f1f2f3;
+        }
+        footer {
+            text-align: center;
+            font-size: 12px;
+            padding: 12px;
+        }
+        .bordered, .notbordered {
+            width: 100%; 
+            margin: 33px auto;
+        }
+        .card {
+            margin: 11px auto; 
+        }
+    body
+      container
+        row
+          p.logo
+            img(src='https://www.tendapa.co.ke/png/tendapa-logo-white.png', alt='tendapa-logo-white')
+        row.padded
+          p
+            h1.centered.heading Welcome  #{name}
+          p
+            h3.centered.heading We will notify you soon to start selling
+          p
+            .centered.heading Its what you need to kickstart and grow your business
+        row.shaded
+            row
+                column
+                    .card
+                        .bordered
+                            .imgholder
+                                img(src='https://www.tendapa.co.ke/png/meet-new-customers.png', alt='tendapa-logo-white')
+                            .narative
+                                h5.centered.subheading Meet New Customers
+                                p.centered.subheading Connect with new customer and chat instantly  
+                column
+                    .card
+                        .bordered
+                            .imgholder
+                                img(src='https://www.tendapa.co.ke/png/pay-on-delivery.png', alt='tendapa-logo-white')
+                            .narative
+                                h5.centered.subheading Receive and deliver orders
+                                p.centered.subheading Receive orders through yoyr store and get paid after delivery
+                column
+                    .card
+                        .notbordered
+                            .imgholder
+                                img(src='https://www.tendapa.co.ke/png/increase-your-sales.png', alt='tendapa-logo-white')
+                            .narative
+                                h5.centered.subheading Increase your sales
+                                p.centered.subheading Sell more products to a larger online market 
+            row
+                column
+                    .card
+                        .bordered
+                            .imgholder
+                                img(src='https://www.tendapa.co.ke/png/grow-your-brand.png', alt='tendapa-logo-white')
+                            .narative
+                                h5.centered.subheading Grow your own brand
+                                p.centered.subheading Share your product catalog to grow your awareness and identity 
+                column
+                    .card
+                        .bordered
+                            .imgholder
+                                img(src='https://www.tendapa.co.ke/png/manage-your-stock.png', alt='manage-your-stock')
+                            .narative
+                                h5.centered.subheading Manage your stock
+                                p.centered.subheading Receive orders through your store and get paid after delivery
+                column(valign="middle")
+                    .card
+                        .notbordered
+                            .imgholder
+                                img(src='https://www.tendapa.co.ke/png/stay-connected.png', alt='tendapa-logo-white')
+                            .narative
+                                h5.centered.subheading Stay connected to your customers
+                                p.centered.subheading Understand your customers' needs better and build trust 
+        row
+          column
+            h2.centeredpadded See you in a bit
+        row
+          column
+            footer
+                | @Tendapa 2017. All rights reserved
