@@ -13,8 +13,10 @@ An application initialized using `f3` will have the following directory stucture
 
 
 ```text
-.
-├── f3.config.js                               # nuxt & backpack configuration
+├── f3.config.js                              # nuxt & backpack configuration
+├── .babelrc                                  # babel configuration to use with backpack
+├── .podhook                                  # shell scripts to run on remote server during deploy
+├── .gitignore                                # list of file to ignore while deploying to remote server
 └── src
     ├── client                                # transpiled using nuxt
         ├── assets                            # files to transpile with webpack: less, stylus 
@@ -25,14 +27,14 @@ An application initialized using `f3` will have the following directory stucture
         ├── middleware                        # nuxt renderer middleware
         ├── plugins                           # Vue.js plugins
         ├── store                             # Vuex store modules
-        └── utils                             # directory for files not specific to nuxt
-	        ├── initClient.js                     # creates feathers client for server and client bundle
+        └── utils                             
+            ├── initClient.js                     # creates feathers client for server and client bundle
             ├── initAuth.js                       # autheticate and populate store with user object 
-            └── store                             # utilities for vuex store
+            └── store              
                 ├── modules                         # modules for vuex
                 └── plugins                         # plugins for vuex
     └── server                                # transpiled using backpack
-        ├── config                            # server environment variables
+        ├── config                            
             ├── default.yml                        # settings for development env
             ├── production.yml                     # settings for production env
             └── production-0.yml                   # settings for PM2 app instance 0
@@ -44,11 +46,11 @@ An application initialized using `f3` will have the following directory stucture
         ├── hooks                              # triggers run during resource access
         ├── services                           # service, schema, model and hooks for resources in db, fs,
         ├── notifications                      # templates and dispatcher for email, sms, webpush notifications
-        └── db                                 # database resources
+        └── db                                 
             ├── orm.ls                             # configures feathers to use mongoose or sequelize ORM
             ├── seed.ls                            # populates database with dummy data
             └── migrations                         # procedures to creates and drop tables
-        └── middleware                         # feathers middleware
+        └── middleware                         
 	        └── nuxt.ls                            # nuxt middleware for SSR
 ```
 
