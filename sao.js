@@ -9,56 +9,17 @@ module.exports = {
       message: 'How would you descripe the new project?',
       default: `feathers nuxt fullstack`
     },
+
     database: {
       message: 'What type of database will you be using',
       type: 'list',
       choices: [
         { name: 'In memory storage;', value: 'memory', short: 'memory' },
-        { name: 'SQL (Relational) Database; PostgreSQL, MySQL, MariaDB, SQLite, MSSQL', value: 'sql', short: 'sql' },
-        { name: 'NoSQL (Document) Database; MongoDB', value: 'nosql', short: 'nosql' }
+        { name: 'SQL (Relational) Database', value: 'sql', short: 'sql' },
+        { name: 'NoSQL (Document) Database', value: 'nosql', short: 'nosql' }
       ],
       default: 'memory'
-    },
-    cache: {
-      type: 'confirm',
-      message: 'Cache API responses with redis?',
-      default: true
-    },
-    resque: {
-      type: 'confirm',
-      message: 'Queue background jobs with redis?',
-      default: true
-    },
-
-    redis_host: {
-      message: 'Redis server host address',
-      when: function({cache, resque}) {
-        return !!(cache || resque)
-      },
-      default: '127.0.0.1'
-    },
-    redis_port: {
-      message: 'Redis server host port',
-      when: function({cache, resque}) {
-        return !!(cache || resque)
-      },
-      default: '6379'
-    },
-    redis_database: {
-      message: 'Redis database to use',
-      when: function({cache, resque}) {
-        return !!(cache || resque)
-      },
-      default: '0'
-    },
-    redis_password: {
-      message: 'Password for Redis database',
-      when: function({cache, resque}) {
-        return !!(cache || resque)
-      },
-      default: ''
-    },
-
+    },    
 
     sequelize_dialect: {
       message: 'What dialect of SQL database will you be using',
@@ -107,6 +68,46 @@ module.exports = {
       }
     },
 
+    cache: {
+      type: 'confirm',
+      message: 'Cache API responses with redis?',
+      default: true
+    },
+    resque: {
+      type: 'confirm',
+      message: 'Queue background jobs with redis?',
+      default: true
+    },
+
+    redis_host: {
+      message: 'Redis server host address',
+      when: function({cache, resque}) {
+        return !!(cache || resque)
+      },
+      default: '127.0.0.1'
+    },
+    redis_port: {
+      message: 'Redis server host port',
+      when: function({cache, resque}) {
+        return !!(cache || resque)
+      },
+      default: '6379'
+    },
+    redis_database: {
+      message: 'Redis database to use',
+      when: function({cache, resque}) {
+        return !!(cache || resque)
+      },
+      default: '0'
+    },
+    redis_password: {
+      message: 'Password for Redis database',
+      when: function({cache, resque}) {
+        return !!(cache || resque)
+      },
+      default: ''
+    },
+
 
     username: {
       message: 'What is your GitHub username?',
@@ -125,7 +126,7 @@ module.exports = {
       },
       store: true
     }
-    
+
   },
   move: {
     'gitignore': '.gitignore'
