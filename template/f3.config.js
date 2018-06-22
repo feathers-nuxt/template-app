@@ -29,13 +29,23 @@ module.exports = {
     }
   },
   project: { // config options obtained from prompts by sao
-    name: "<%= name %>"
-    description: "<%= description %>"
-    database: "<%= database %>"
-    cache: "<%= cache %>"
-    resque: "<%= resque %>"
-    username: "<%= username %>"
-    email: "<%= email %>"
+    name: "<%= name %>",
+    description: "<%= description %>",
+    database: "<%= database %>",
+    sequelize_dialect: "<%= sequelize_dialect %>",
+    sequelize_host: "<%= sequelize_host %>",
+    sequelize_port: "<%= sequelize_port %>",
+    sequelize_database: "<%= sequelize_database %>",
+    sequelize_username: "<%= sequelize_username %>",
+    sequelize_password: "<%= sequelize_password %>",
+    cache: "<%= cache %>",
+    resque: "<%= resque %>",
+    redis_host: "<%= redis_host %>",
+    redis_port: "<%= redis_port %>",
+    redis_database: "<%= redis_database %>",
+    redis_password: "<%= redis_password %>",
+    username: "<%= username %>",
+    email: "<%= email %>",
     website: "<%= website %>"
   },
   backpack: (config, options, webpack) => {
