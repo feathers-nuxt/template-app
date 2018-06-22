@@ -186,56 +186,7 @@ export default async function(ctx, log) {
     console.log('initClient :: no access token')
   }
 
-  // console.log(`init client on ${process.client ? 'client': 'server'}`, ctx.app.store.state.auth)
-
-  // feathersClient.auth = AuthManagement(feathersClient)
-
-  // feathersClient.service('sourceaddresses')
-  // feathersClient.service('partners')
-  // feathersClient.service('roles')
-  // feathersClient.service('users')
-  // feathersClient.service('userprofiles')
-  // feathersClient.service('accountgroups')
-  // feathersClient.service('accountgrouproles')
-  // feathersClient.service('messages')
-  // feathersClient.service('messagetypes')
-  // feathersClient.service('contacts')
-  // feathersClient.service('contactgroups')
-  // feathersClient.service('partners')
-
 
   return feathersClient
 
 }
-
-// const authManagement = new AuthManagement(app);
-
-// // check props are unique in the users items
-// authManagement.checkUnique(identifyUser, ownId, ifErrMsg)
-
-// // resend sign up verification notification
-// authManagement.resendVerifySignup(identifyUser, notifierOptions)
-
-// // sign up or identityChange verification with long token
-// authManagement.verifySignupLong(verifyToken)
-
-// // sign up or identityChange verification with short token
-// authManagement.verifySignupShort(verifyShortToken, identifyUser)
-
-// // send forgotten password notification
-// authManagement.sendResetPwd(identifyUser, notifierOptions)
-
-// // forgotten password verification with long token
-// authManagement.resetPwdLong(resetToken, password)
-
-// // forgotten password verification with short token
-// authManagement.resetPwdShort(resetShortToken, identifyUser, password)
-
-// // change password
-// authManagement.passwordChange(oldPassword, password, identifyUser)
-
-// // change identity
-// authManagement.identityChange(password, changesIdentifyUser, identifyUser)
-
-// // Authenticate user and log on if user is verified. v0.x only.
-// authManagement.authenticate(email, password)
