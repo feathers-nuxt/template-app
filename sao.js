@@ -13,8 +13,8 @@ module.exports = {
       message: 'What type of database will you be using',
       type: 'list',
       choices: [
-        { name: 'In memory storage;', value: 'memory', short: 'memory' }
-        { name: 'SQL (Relational) Database; PostgreSQL, MySQL, MariaDB, SQLite, MSSQL', value: 'sql', short: 'sql' }
+        { name: 'In memory storage;', value: 'memory', short: 'memory' },
+        { name: 'SQL (Relational) Database; PostgreSQL, MySQL, MariaDB, SQLite, MSSQL', value: 'sql', short: 'sql' },
         { name: 'NoSQL (Document) Database; MongoDB', value: 'nosql', short: 'nosql' }
       ],
       default: 'memory'

@@ -1,14 +1,32 @@
 
-### Quick start
-Ensure you have installed `f3` cli globally. At the moment the package isn't published to `npm` so you'd install from [github](https://github.com/feathers-nuxt/cli). Just run: 
-> `npm i -g github:feathers-nuxt/cli`
+## Quick Start
+Ensure you have [sao](https://sao.js.org/) installed globally. 
+> `yarn` is preferred to `npm`, although you may use the later if you so wish.
+```bash
+sao feathers-nuxt/template-app awesome-app
+```
+You will be prompted to answer a couple of questions to determine how the template should be customized to your needs. Sao will then clone the template in this repository and put the customized template inside `awesome-app` directory.
 
-To start a new `feathers-nuxt` project using `f3` cli, just invoke the following on your terminal
-> `f3 init awesome-project` 
 
-This will clone the template in this repository using [saojs](https://github.com/saojs/sao) and create a boilerplate, inside `awesome-project` directory, customized as per your answers to the prompted questions.
+You may also use `f3` cli instead of `sao` if you install it globally. At the moment the `f3` isn't published to `npm` so you'd install from [github](https://github.com/feathers-nuxt/cli)
+```bash
+yarn global add github:feathers-nuxt/cli
+# npm i -g github:feathers-nuxt/cli
+f3 init awesome-app
+```
 
-#### Directory structure
+Once your app is initialized do `cd awesome-app` to access your new project.
+> To start the application in development mode - watch files for changes and reload - run
+```bash
+yarn dev
+```
+
+> There are several other `npm scripts` defined in `package.json`. To list them all, invoke
+```bash
+yarn run
+```
+
+### Guide
 An application initialized using `f3` will have the following directory stucture
 
 
