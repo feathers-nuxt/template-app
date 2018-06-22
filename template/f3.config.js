@@ -29,14 +29,14 @@ module.exports = {
     }
   },
   project: { // config options obtained from prompts by sao
-    name: "<%= name ?>"
-    description: "<%= description ?>"
-    database: "<%= database ?>"
-    cache: "<%= cache ?>"
-    resque: "<%= resque ?>"
-    username: "<%= username ?>"
-    email: "<%= email ?>"
-    website: "<%= website ?>"
+    name: "<%= name %>"
+    description: "<%= description %>"
+    database: "<%= database %>"
+    cache: "<%= cache %>"
+    resque: "<%= resque %>"
+    username: "<%= username %>"
+    email: "<%= email %>"
+    website: "<%= website %>"
   },
   backpack: (config, options, webpack) => {
     config.mode = 'development' // or 'production'
