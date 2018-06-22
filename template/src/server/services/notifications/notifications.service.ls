@@ -1,6 +1,7 @@
 debug = (require 'debug') 'notifications-service'
 
-createService = (require '~/notifications/feathers-notifme').default
+# createService = (require '../../notifications/feathers-notifme')
+createService = require 'feathers-notifme'
 hooks = require './notifications.hooks'
 
 module.exports = ->

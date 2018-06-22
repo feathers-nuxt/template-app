@@ -4,17 +4,17 @@
 {restrictToOwner} = require('feathers-authentication-hooks')
 _ = require('feathers-hooks-common')
 
-ensureEnabled = require('~/hooks/ensure-enabled')
-{setDefaultRole} = require('~/hooks/set-default-role')
-setFirstUserToRole = require('~/hooks/set-first-user-to-role')
-hasPermissionBoolean = require('~/hooks/has-permission-boolean')
-sendVerificationEmail = require('~/hooks/send-verification-email')
-{preventDisabledAdmin} = require('~/hooks/prevent-disabled-admin')
+ensureEnabled = require('../../hooks/ensure-enabled')
+setDefaultRole = require('../../hooks/set-default-role')
+setFirstUserToRole = require('../../hooks/set-first-user-to-role')
+hasPermissionBoolean = require('../../hooks/has-permission-boolean')
+sendVerificationEmail = require('../../hooks/send-verification-email')
+preventDisabledAdmin = require('../../hooks/prevent-disabled-admin')
 
 restrict = [
-  authenticate('jwt')
-  ensureEnabled!
-  _.unless (hasPermissionBoolean 'manageUsers'), restrictToOwner idField: '_id' ownerField: '_id'
+  # authenticate('jwt')
+  # ensureEnabled!
+  # _.unless (hasPermissionBoolean 'manageUsers'), restrictToOwner idField: '_id' ownerField: '_id'
 ]
 
 schema =
@@ -35,52 +35,46 @@ module.exports =
     all: []
     find: [].concat(restrict),
     get: [].concat(restrict),
-    create: [
-      hashPassword!,
-      addVerification!, # adds .isVerified, .verifyExpires, .verifyToken, .verifyChanges
-      setDefaultRole!,
-      setFirstUserToRole(role: 'admin'),
-      preventDisabledAdmin!
-    ]
+    create: []
     update: [
       _.disallow('external')
     ]
     patch: [
-      preventDisabledAdmin!,
+      # preventDisabledAdmin!,
       _.iff(
         _.isProvider('external'),
-        _.preventChanges(
-          'email',
-          'isVerified',
-          'verifyToken',
-          'verifyShortToken',
-          'verifyExpires',
-          'verifyChanges',
-          'resetToken',
-          'resetShortToken',
-          'resetExpires'
-        )
+        # _.preventChanges(
+        #   'email',
+        #   'isVerified',
+        #   'verifyToken',
+        #   'verifyShortToken',
+        #   'verifyExpires',
+        #   'verifyChanges',
+        #   'resetToken',
+        #   'resetShortToken',
+        #   'resetExpires'
+        # )
       ),
     ].concat(restrict),
     remove: [].concat(restrict)
   after:
     all: [
-      _.when(
-        (hook) -> hook.params.provider ,
-        _.discard('password', '_computed', 'verifyExpires', 'resetExpires', 'verifyChanges')
-      )
+      # _.when(
+      #   (hook) -> hook.params.provider ,
+      #   _.discard('password', '_computed', 'verifyExpires', 'resetExpires', 'verifyChanges')
+      # )
     ]
     find: [
-      _.populate( schema: schema ),
-      _.serialize(serializeSchema),
+      # _.populate( schema: schema ),
+      # _.serialize(serializeSchema),
     ]
     get: [
-      _.populate( schema: schema ),
-      _.serialize(serializeSchema),
+      # _.populate( schema: schema ),
+      # _.serialize(serializeSchema),
     ]
     create: [
-      sendVerificationEmail!,
-      removeVerification! #removes verification/reset fields other than .isVerified
+      # sendVerificationEmail!,
+      # removeVerification! #removes verification/reset fields other than .isVerified
     ]
     update: []
     patch: []

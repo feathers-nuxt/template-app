@@ -1,9 +1,9 @@
-{disallow} = (require 'feathers-hooks-common')
+# {disallow} = (require 'feathers-hooks-common')
 
 module.exports =
   before: 
-    all: [disallow 'external']
-    # all: []
+    # all: [disallow 'external']
+    all: []
     find: []
     get: []
     create: []

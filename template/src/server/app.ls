@@ -1,48 +1,26 @@
 path = require 'path'
-
-cors = require 'cors'
-helmet = require 'helmet'
-winston = require 'winston'
-compress = require 'compression'
 favicon = require 'serve-favicon'
-
-configuration = require '@feathersjs/configuration'
-feathers = require '@feathersjs/feathers'
-socketio = require '@feathersjs/socketio'
 express = require '@feathersjs/express'
-logger = require 'feathers-logger'
 
-middleware = require '~/middleware'
-appHooks = require '~/app.hooks'
-services = require '~/services'
-channels = require '~/channels'
-db = require '~/sequelize'
-auth = require '~/auth'
+nuxt = require './middleware' # nuxt SSR middleware
+api = require './api' # feathers-express app
 
-app = express feathers!
+# this is a simple express application
+app = express!
 
-app.configure logger winston
-app.configure configuration!
-app.configure express.rest!
-app.configure socketio!
-app.configure db
-app.configure services
-app.configure channels
-app.configure auth
+# include feathers-express as a sub app namespaced behind '/api' 
+# An Express app is valid middleware. See https://expressjs.com/en/api.html#app.use
+app.use '/api', api # routes starting with /api/ will be processed by feathers
 
-app.use cors!
-app.use helmet!
-app.use compress!
-app.use express.json!
-app.use express.urlencoded {extended: true}
-app.use '/static', express.static (app.get 'public')
-app.use favicon path.join (app.get 'public'), 'icon.png'
+# include middleware for rendering nuxt routes
+app.use nuxt api # routes NOT starting with /api/ will be processed by nuxt
 
-app.configure middleware #ensure middleware conf is last
+# include middleware to serve static content from the configured “public” directory
+# See /src/server/confid/default.yml for “public” directory configuration
+app.use '/static', express.static api.get 'public'
 
-app.hooks appHooks
+# include middleware to serve favicon image from the configured “public” directory
+app.use favicon path.join (api.get 'public'), 'favicon.ico'
 
-app.use express.notFound!
-app.use express.errorHandler {logger: winston}
 
 module.exports = app

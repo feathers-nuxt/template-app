@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div class="layout">
     <nuxt/>
   </div>
 </template>
 
-<style>
+<style scoped>
+.layout { 
+}
 html
 {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;

@@ -15,7 +15,7 @@ An application initialized using `f3` will have the following directory stucture
 ```text
 ├── f3.config.js                              # nuxt & backpack configuration
 ├── .babelrc                                  # babel configuration to use with backpack
-├── .podhook                                  # shell scripts to run on remote server during deploy
+├── .podhook                                  # shell commands to run on remote server during deploy
 ├── .gitignore                                # list of file to ignore while deploying to remote server
 └── src
     ├── client                                # transpiled using nuxt
@@ -41,11 +41,12 @@ An application initialized using `f3` will have the following directory stucture
         ├── index.ls                           # entry to initialize both app and api servers   
         ├── app.ls                             # express server with nuxt middleware and feathers as sub app     
         ├── api.ls                             # feathers server with socket.io and rest transports
-        ├── auth.ls                            # configures feathers for authentication
         ├── api.hooks.ls                       # configures global api hooks
         ├── hooks                              # triggers run during resource access
+            └──r.ls                       # configures global api hooks
+        ├── notifications                      # templates and dispatcher for email, sms, webpush,
         ├── services                           # service, schema, model and hooks for resources in db, fs,
-        ├── notifications                      # templates and dispatcher for email, sms, webpush notifications
+            └── auth.ls                            # configures feathers for authentication
         └── db                                 
             ├── orm.ls                             # configures feathers to use mongoose or sequelize ORM
             ├── seed.ls                            # populates database with dummy data

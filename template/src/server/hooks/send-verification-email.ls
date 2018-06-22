@@ -1,4 +1,4 @@
-dispatcher = require '~/notifications/dispatcher'
+dispatcher = require '../notifications/dispatcher'
 
 module.exports = (opts) ->
   options = if opts then opts else {}

@@ -30,11 +30,6 @@
      width: 500px !important;
 }
 
-
-html,
-.layout-content{
-    background: #f5f7f9;
-}
 .ivu-badge-count {
     background: #fff;
     color: #a0a0a0;
@@ -42,4 +37,243 @@ html,
 
 .ivu-radio-inner::after {
     border-radius: 6px !important;
+}
+
+
+.ivu-menu-horizontal {
+    height: 64px !important;
+}
+
+
+
+html {
+    // height: 100vh;
+}
+
+
+body {  
+    background: #ECE9E6;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.container {
+  transition: all .5s cubic-bezier(.55,0,.1,1);
+}
+
+.page-enter-active, .page-leave-active {
+  transition: opacity .5s
+}
+.page-enter, .page-leave-active {
+  opacity: 0
+}
+
+.bounce-enter-active {
+  animation: bounce-in .8s;
+}
+.bounce-leave-active {
+  animation: bounce-out .5s;
+}
+@keyframes bounce-in {
+  0% { transform: scale(0) }
+  50% { transform: scale(1.5) }
+  100% { transform: scale(1) }
+}
+@keyframes bounce-out {
+  0% { transform: scale(1) }
+  50% { transform: scale(1.5) }
+  100% { transform: scale(0) }
+}
+
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(30px, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-30px, 0);
+}
+
+
+
+/*internet explorer scrollbalken*/
+body{
+  scrollbar-base-color: #C0C0C0;
+  scrollbar-base-color: #C0C0C0;
+  scrollbar-3dlight-color: #C0C0C0;
+  scrollbar-highlight-color: #C0C0C0;
+  scrollbar-track-color: #EBEBEB;
+  scrollbar-arrow-color: black;
+  scrollbar-shadow-color: #C0C0C0;
+  scrollbar-dark-shadow-color: #C0C0C0;
+  overflow: auto;
+}
+/*mozilla scrolbalken*/
+@-moz-document url-prefix(http:\/\/),url-prefix(https:\/\/) {
+  scrollbar {
+    -moz-appearance: none !important;
+    background: rgb(0,255,0) !important;
+  }
+  thumb,scrollbarbutton {
+    -moz-appearance: none !important;
+    background-color: rgb(0,0,255) !important;
+  }
+
+  thumb:hover,scrollbarbutton:hover {
+    -moz-appearance: none !important;
+    background-color: rgb(255,0,0) !important;
+  }
+
+  scrollbarbutton {
+    display: none !important;
+  }
+
+  scrollbar[orient="vertical"] {
+    min-width: 15px !important;
+  }
+}
+/**/
+.scrollbar-container {
+    overflow: auto;
+}
+::-webkit-scrollbar {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: solid whiteSmoke 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.ivu-btn a {
+  color: #f3f3f3;
+}
+
+.ivu-btn  a:hover {
+  color: #ffffff;
+}
+
+.ivu-table-tip table td {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+
+
+@media screen and (max-width: 666px) {
+
+  /* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+  
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+  
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  
+  table tr {
+    border-bottom: 4px solid #efefef;
+    // margin-bottom: .625em;
+  }
+  
+  table td  {
+    display: flex;
+    align-items: center;
+  }
+
+  table td .ivu-table-cell {
+    width: 100%;
+  }
+  
+  table td .ivu-table-cell > div {
+    display: flex;
+    font-size: .8em;
+    text-align: right;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  table td:last-of-type .ivu-table-cell {
+    padding: 0
+    margin 0
+  }
+
+  table td:last-of-type .ivu-table-cell > div {
+    display flex
+    align-items flex-end
+    justify-content flex-end
+    padding: 0
+    margin 0
+  }
+
+  table td:last-of-type .ivu-table-cell > div button {
+    width: 3.33rem;
+  }
+
+
+  table td:last-of-type .ivu-table-cell > div i {
+    font-size: 1.11rem
+    height 1.66rem
+    width 1.66rem
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%
+    box-shadow 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149)
+  }
+  
+  table td .ivu-table-cell > div::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    min-width: 5rem;
+    text-align: left;
+    margin-right: 1rem;
+  }
+
+  table td .ivu-table-cell > div span {
+    margin-left: auto;
+  }
+  
+  table td:last-child {
+    border-bottom: 0;
+  }
+
+  .ivu-table th, .ivu-table td {
+    height: auto;
+    padding: .5rem 0; 
+  }
+
+  .ivu-page-total {
+    display: block;
+    text-align: center;
+    margin-bottom: .5rem;
+}
+
 }

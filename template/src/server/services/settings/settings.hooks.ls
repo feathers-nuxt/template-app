@@ -1,8 +1,8 @@
 {authenticate} = require('@feathersjs/authentication').hooks
-{disallow} = (require 'feathers-hooks-common')
+# {disallow} = (require 'feathers-hooks-common')
 
-hasPermission = require '~/hooks/has-permission'
-ensureEnabled = require '~/hooks/ensure-enabled'
+hasPermission = require '../../hooks/has-permission'
+ensureEnabled = require '../../hooks/ensure-enabled'
 
 module.exports =
   before:

@@ -1,8 +1,7 @@
 _ = require 'lodash'
 {NotAuthenticated,Forbidden} = require 'feathers-errors'
 
-module.exports = (opts) ->
-  options = if opts then opts else {}
+module.exports = (options = {}) ->
   (hook) ->
     return Promise.resolve hook if not hook.params.provider
     if (_.get hook, 'params.user.role') is 'admin' then return Promise.resolve hook

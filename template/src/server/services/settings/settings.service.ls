@@ -9,5 +9,5 @@ module.exports = ->
     Model: createModel app
     paginate: app.get 'paginate'
   app.use '/settings', createService options
-  (app.service 'users').hooks hooks
+  (app.service 'settings').hooks hooks
   return

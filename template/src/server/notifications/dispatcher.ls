@@ -39,15 +39,15 @@ verifySignup = (app, user, hook) ->
     # console.log 'compiledEmail >>>><<<<< '      
     notification =
       email:
-          to: (hook.data.email)
-          from: (app.get 'SMTP_USER')
-          subject: 'subject'
-          html: compiledEmail.html
+        to: (hook.data.email)
+        from: (app.get 'SMTP_USER')
+        subject: 'subject'
+        html: compiledEmail.html
     # console.log 'sending verification email ', notification
     sendEmailNotification app, notification )
 
 module.exports = (app) ->
-    dispatch: (notification, user, hook) ->
-        console.log 'notifications dispatch > ', notification
-        notification.apply null, [app, user, hook] if typeof notification is 'function'
-        return 
+  dispatch: (notification, user, hook) ->
+    console.log 'notifications dispatch > ', notification
+    notification.apply null, [app, user, hook] if typeof notification is 'function'
+    return 
