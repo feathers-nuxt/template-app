@@ -28,6 +28,16 @@ module.exports = {
 
     }
   },
+  project: { // config options obtained from prompts by sao
+    name: "<%= name ?>"
+    description: "<%= description ?>"
+    database: "<%= database ?>"
+    cache: "<%= cache ?>"
+    resque: "<%= resque ?>"
+    username: "<%= username ?>"
+    email: "<%= email ?>"
+    website: "<%= website ?>"
+  },
   backpack: (config, options, webpack) => {
     config.mode = 'development' // or 'production'
     // server main file
@@ -84,7 +94,7 @@ module.exports = {
       PORT: process.env.PORT
     },
     head: {
-      title: 'tes',
+      title: "<%= name %>",
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -95,7 +105,7 @@ module.exports = {
       ]
     },
     manifest: {
-      name: 'tes',
+      name: "<%= name %>",
       description: 'feathers nuxt fullstack',
       theme_color: '#188269'
     },
