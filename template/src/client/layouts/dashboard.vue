@@ -107,7 +107,6 @@ export default {
     };
   },
   mounted() {
-    console.log('all aboard', this.$can('create', 'contacts'))
     if (!window.navigator) {
       this.online = false;
       return;
