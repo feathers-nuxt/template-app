@@ -9,15 +9,15 @@ paginate:
 database:
   resque:
     host: <%= redis_host %>
+    password: <%= redis_password %>
     port: <%= redis_port %>
     database: <%= redis_database %>
-    password: <%= redis_password %>
     pkg: ioredis
   sequelize:
     username: <%= sequelize_username %>
     password: <%= sequelize_password %>
     database: <%= sequelize_database %>
-    dialect:  <%= sequelize_dialect %>
+    dialect: <%= sequelize_dialect %>
     host: <%= sequelize_host %>
     port: <%= sequelize_port %>
     logging: false
@@ -27,22 +27,28 @@ authentication:
   strategies:
   - jwt
   - local
-  path: "authentication"
-  service: "useraccounts"
-  entity: "useraccount"
+  - rest
+  path: authentication
+  service: users
+  entity: user
   jwt:
     header:
       type: access
-    audience: https://<%= name %>.com
+    audience: https://<%=name%>.com
     subject: anonymous
-    issuer: <%= name %>
+    issuer: bulksms
     algorithm: HS256
     expiresIn: 1d
+  rest:
+    entity: user
+    service: users
+    usernameField: username
+    passwordField: password
   local:
-    entity: useraccount
-    service: "useraccounts"
-    usernameField: "username"
-    passwordField: "password"
+    entity: user
+    service: users
+    usernameField: username
+    passwordField: password
   cookie:
     enabled: true
     name: feathers-jwt

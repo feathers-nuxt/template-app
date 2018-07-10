@@ -1,11 +1,10 @@
 <template lang="pug">
 Header(:style="{background: '#fff', padding: '0px 10px', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}")
-    IviewMenu.topnav(mode='horizontal' theme='light' active-name='1' )
+    IviewMenu.topnav(mode='horizontal', theme='light', active-name='1' )
         .layout-logo
             Icon(:type="menuicon"  v-if="windowWidth < 1300" @click='toggleSider')
-            .logoanchor
-              nuxt-link(to='/')
-                img.header__logo-image(src='~/static/logo.png' alt='Home')
+            .logoanchor(@click="hardReload")
+                img.header__logo-image(src='~/static/logo.png', alt='Home')
         .layout-nav
         MenuItem(name='0', :style="{ padding: '0' }")
             Dropdown(style='margin: 0' v-on:on-click="handleSelected")
@@ -14,7 +13,7 @@ Header(:style="{background: '#fff', padding: '0px 10px', boxShadow: '0 2px 3px 2
                     span(:style="{ display: 'inline-block', width: '.5rem' }")  
                     icon(type='arrow-down-b')
                 DropdownMenu(slot='list')
-                    DropdownItem(name='profile')  Profile
+                    DropdownItem(name='profile') Profile
                     DropdownItem(name='logout') Log Out
 </template>
 
@@ -54,22 +53,27 @@ Header(:style="{background: '#fff', padding: '0px 10px', boxShadow: '0 2px 3px 2
 <script lang="livescript">
 IviewMenu = require "~/components/iview/IviewMenu"
 module.exports =
-    props: <[ showSider ]>
-    components:
-        IviewMenu: IviewMenu.default
-    computed:
-        menuicon: ->
-            if @showSider then 'close-round' else 'navicon-round'
-        username: ->
-            @$store.state.auth.user and @$store.state.auth.user.username
-    methods: 
-        toggleSider: ->
-            @$emit 'togglesider' 
-        handleSelected: (option) ->>
-            console.log 'handle selections' option
-            if option is \logout 
-                await @$store.dispatch 'auth/logout'
-                console.log 'log out res'
-                @goHome!
-
+  props: <[ showSider ]>
+  components:
+    IviewMenu: IviewMenu.default
+  computed:
+    menuicon: ->
+      if @showSider then 'close-round' else 'navicon-round'
+    username: ->
+      @$store.state.auth.user and @$store.state.auth.user.profile and @$store.state.auth.user.profile.username
+  methods: 
+    hardReload: -> 
+      #@$router.push path: '/'
+      location.replace location.origin 
+      setTimeout( ~> (
+        @$store.commit('crash/clearError') 
+      ), 666)                
+    toggleSider: ->
+      @$emit 'togglesider' 
+    handleSelected: (option) ->>
+      console.log 'handle selections' option
+      if option is \logout 
+        await @$store.dispatch 'auth/logout'
+        console.log 'log out res'
+        @$router.push path: '/'
 </script>

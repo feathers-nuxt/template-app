@@ -1,80 +1,89 @@
 <style scoped lang='stylus'>
 .page
-    border 1px solid #d7dde4
-    position relative
-    border-radius 4px
-    overflow hidden
-    display flex
-    min-height 90vh
+  border 1px solid #d7dde4
+  position relative
+  border-radius 4px
+  overflow hidden
+  display flex
+  min-height 90vh
 
 [v-cloak]
-    display none
+  display none
 
 .network
-    font-weight 400
-    font-size 1rem
-    text-align center
+  font-weight 400
+  font-size 1rem
+  text-align center
+  .circle
+    display inline-block
+    background green
+    color #ffffff
+    padding 0rem 1rem
+  &.offline
     .circle
-        display inline-block
-        background green
-        color #ffffff
-        padding 0rem 1rem
-    &.offline
-        .circle
-            background #ff8d25
+      background #ff8d25
 
 .page,
 .ivu-layout
-    overflow auto
-    background #ece9e6
-    background -webkit-linear-gradient(
-    to top,
-    #ffffff,
-    #ece9e6
-  )
-    background linear-gradient(
-    to top,
-    #ffffff,
-    #ece9e6
-  )
+  overflow auto
+  background #ece9e6
+  background -webkit-linear-gradient( to top,  #ffffff, #ece9e6 )
+  background linear-gradient( to top, #ffffff, #ece9e6 )
 
 .layout
     padding 1rem
     flex 1
 
 .hidden
-    &.layout
-        padding 0
-        flex 0
-        .portal
-            padding 0
+  &.layout
+    padding 0
+    flex 0
+    .portal
+      padding 0
+
+.sidemenu
+  background #ffffff
+
+.offline
+  display flex
+  align-items center
+  justify-content center
+  position absolute
+  width 100%
+  z-index 999
+  p 
+    text-align center
+    font-weight bold
+    color #FE4E02
+    box-shadow 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+    width 27rem
+    margin-bottom .27rem
+    background #f5f7f9
+    &.small
+      background transparent
 </style>
 
-<template>
-  <div> 
-    <div  v-cloak >
-        <TopNav v-on:togglesider='toggleSider' :showSider="showSider" />
-        <div class="page">
-          <Sider hide-trigger :style="{background: '#fff'}" v-if="screenSize > 1300 | showSider" >
-            <SideNav v-on:navigateTo='toggleSider' />
-          </Sider>
-          <Layout class="layout" v-bind:class="classObject"  >
-            <!-- <Breadcrumb :style="{margin: '0', display: 'flex', justifyContent: 'flex-end'}">
-                <BreadcrumbItem>{{$store.state.auth.user.organization.profile.companyName}}</BreadcrumbItem>
-            </Breadcrumb> -->
-            <Content class="portal"  >
-              <nuxt/>
-            </Content>
-          </Layout>
-        </div>
-        <AppFooter/>
-    </div>
-  </div>
+<template lang='pug'>
+.dashboard
+  .offline(v-if='!$store.state.network.online')
+    p(v-bind:class='classObject') Connection to server lost
+  .viewport(v-cloak='')
+    TopNav(v-on:togglesider='toggleSider', :showSider='showSider')
+    .page
+      .sidemenu
+        Sider(hide-trigger='', :style="{background: '#fff'}", v-if='screenSize > 1300 | showSider')
+          SideNav(v-on:navigateTo='toggleSider')
+      Layout.layout(v-bind:class='classObject')
+        Content.portal
+          nuxt
+    AppFooter
 </template>
+
+
 <script>
-import TopNav from "~/components/partials/TopNav";
-import SideNav from "~/components/partials/SideNav";
-import AppFooter from "~/components/partials/Footer";
+import TopNav from "~/components/layout/TopNav";
+import SideNav from "~/components/layout/SideNav";
+import AppFooter from "~/components/layout/Footer";
 
 export default {
   components: { TopNav, SideNav, AppFooter },
@@ -107,6 +116,7 @@ export default {
     };
   },
   mounted() {
+    // console.log('all aboard', this.$can('create', 'contacts'))
     if (!window.navigator) {
       this.online = false;
       return;

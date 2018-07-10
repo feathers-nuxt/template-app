@@ -48,8 +48,10 @@ export default {
     try {
       const response = await feathersClient.authenticate(credentials)
       // Populate the user if the userService was provided
-      if (state.userService && response.hasOwnProperty('useraccount')) {
-        await dispatch('populateUser', response.useraccount)
+      // console.log('#######response', response)
+      commit('setAccessToken', response.accessToken)
+      if (state.userService && response.hasOwnProperty('user')) {
+        await dispatch('populateUser', response.user)
       }
       return response
     } catch (error) {

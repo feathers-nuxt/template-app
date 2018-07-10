@@ -4,11 +4,20 @@ node_modules
 # logs
 *.log
 
+uploads
+
+data
+
+# redis dump
+dump.rdb
+
 # Nuxt build
 .nuxt
 
 # Nuxt generate
 dist
+
+/uploads
 
 # Intellij idea
 .idea
@@ -16,12 +25,10 @@ dist
 
 # VSCode
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 
 # Generated files
 static/manifest*.json
 static/sw.js
 static/workbox-sw*.js
+
+data/

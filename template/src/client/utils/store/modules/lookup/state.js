@@ -6,6 +6,9 @@ export default function() {
     permissions: [],
     messageTypes: [],
     partners: [],
-    contactGroups: []
+    groups: [],
+    shortcodes: [],
+    contactGroups: [],
+    contactLists: []
   }
 }

@@ -4,7 +4,6 @@ footer.flex-c
     | <%= name %> © {{ new Date().getFullYear() }}
   .copyright
     | all lefts reversed
-    // all lefts reversed
 </template>
 
 <style lang="stylus">

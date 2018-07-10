@@ -86,7 +86,7 @@ module.exports = {
       PORT: process.env.PORT
     },
     head: {
-      title: '<%= name %>"',
+      title: '<%= name %>',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -97,7 +97,7 @@ module.exports = {
       ]
     },
     manifest: {
-      name: '<%= name %>"',
+      name: '<%= name %>',
       description: 'feathers nuxt fullstack',
       theme_color: '#188269'
     },
@@ -110,6 +110,7 @@ module.exports = {
     ],
     plugins: [
       { src: '~/plugins/casl' },
+      { src: '~/plugins/crash' },
       { src: '~/plugins/iview' },
       { src: '~/plugins/fuzzysort' },
       { src: '~/plugins/storyboard' },
@@ -131,7 +132,7 @@ module.exports = {
     // },
     router: {
       base: '/',
-  //    middleware: ['ssr-cookie', 'https']
+      middleware: ['crash'] //'ssr-cookie', 'https'
     },
     srcDir: path.resolve(__dirname, 'src', 'client'),
     loading: {

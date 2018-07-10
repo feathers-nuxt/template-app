@@ -1,21 +1,21 @@
 storyboard = require 'storyboard'
 {addListener} = storyboard
 
-authenticate = ({ login, password }) ->
-  isAuthorized(login, password)
-
-module.exports = (app) -> (socketServer) ->
+module.exports.consoleListener = (api) ->
   consoleListener = (require 'storyboard-listener-console').default
-  wsServerListener = (require 'storyboard-listener-ws-server').default
+  addListener consoleListener #if process.env.NODE_ENV isnt 'production'
+  api.storyboard = storyboard
+  api
 
-  app.storyboard = storyboard
-  
-  if process.env.NODE_ENV isnt 'production'
-    addListener consoleListener
+
+module.exports.wsServerListener = (api) -> (socketServer) ->
+  authenticate = ({ login, password }) ->
+    isAuthorized(login, password)
   # If your application uses sockets with auth, namespace them
   # so that they don't clash with the log server's:
   # At the server...
   # socketServer = io.of('/storyboard')
   # socketServer.use(authenticate)
   # socketServer.on('connection', myConnectFunction)
+  wsServerListener = (require 'storyboard-listener-ws-server').default
   addListener wsServerListener, { socketServer }

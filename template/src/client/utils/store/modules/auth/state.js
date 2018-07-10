@@ -12,8 +12,8 @@ export default function() {
     isLogoutPending: false,
     errorOnAuthenticate: null,
     errorOnLogout: null,
-    userService: 'api/useraccounts',
-    redirectTo: '/messages/inbox',
+    userService: 'api/proxyusers',
+    redirectTo: '/messages/compose',
     user: null
   }
 }

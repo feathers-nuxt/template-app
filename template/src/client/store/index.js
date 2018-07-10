@@ -13,43 +13,24 @@ export const actions = {
 		const { commit, dispatch } = store
 		const { req, beforeNuxtRender } = ctx
 
-		const log = ctx.req.api.storyboard.mainStory.child({
-			src: 'store:main:module',
-			title: `nuxtServerInit ${ process.client ? 'client' : 'server'} bundle`,
-			level: 'DEBUG',
-		})
-
 		// synchronise vue router state with vuex store state
-		sync(ctx.app.store, ctx.app.router) 
-
-		// avail feathers server instance to nuxt ssr for api calls rpc
-    // req.api = req.api // (with provider null?)
+		sync(ctx.app.store, ctx.app.router)
 
     const config = {
       host: req.api.get('host'),
       port: req.api.get('port')
     }
 
+    // pass in params from server to client 
     beforeNuxtRender(({ nuxtState }) => {
       nuxtState.config = config
+      nuxtState.services = Object.keys(req.api.services)
     })
 
     ctx.config = config
-
-		// setup feathersClient
-		// avails auth and service store modules
-		await initClient(ctx, log) 
-
-		// // set access token and jwt payload on auth store module
-		// // with values deserialized from cookie in req
-		// initAuth({
-		// 	req,
-		// 	commit,
-		// 	dispatch,
-		// 	moduleName: 'auth',
-		// 	cookieName: 'feathers-jwt'
-		// })
-		log.close()
+    
+		// setup feathersClient for SSR
+		await initClient(ctx)
 
 		return initAuth
 	}

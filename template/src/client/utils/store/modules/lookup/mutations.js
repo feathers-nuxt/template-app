@@ -30,6 +30,14 @@ export default {
     state.messageTypes = []
   },
 
+  // ContactGroups
+  setContactGroups(state, payload) {
+    state.contactGroups = payload
+  },
+  unsetContactGroups(state) {
+    state.contactGroups = []
+  },
+
   // partners
   setPartners(state, payload) {
     state.partners = payload
@@ -39,11 +47,27 @@ export default {
   },
 
   // partners
-  setContactGroups(state, payload) {
-    state.contactGroups = payload
+  setGroups(state, payload) {
+    state.groups = payload
   },
-  unsetContactGroups(state) {
-    state.contactGroups = []
+  unsetGroups(state) {
+    state.groups = []
+  },
+
+  // partners
+  setShortcodes(state, payload) {
+    state.shortcodes = payload
+  },
+  unsetShortcodes(state) {
+    state.shortcodes = []
+  },
+
+  // partners
+  setContactLists(state, payload) {
+    state.contactLists = payload
+  },
+  unsetContactLists(state) {
+    state.contactLists = []
   },
 
 }

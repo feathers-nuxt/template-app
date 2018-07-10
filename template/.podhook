@@ -1,2 +1,7 @@
-npm install
-npm run build
+rm -rf node_modules
+npm remove --global f3
+yarn install
+yarn add github:feathers-nuxt/cli
+yarn add github:feathers-nuxt/feathers-rest-proxy
+chmod -R a+wrx node_modules/f3
+yarn run build:server

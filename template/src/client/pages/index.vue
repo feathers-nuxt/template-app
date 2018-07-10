@@ -5,24 +5,22 @@
   .container(v-bind:class='classObject')
     .content(v-bind:class='classObject')
       img.header__logo-image(src='~/static/logo.png', alt='Home', v-bind:class='classObject')
-      h1(style='text-align: right; color: #00b3ef;')  BulkSMS Web Portal 
+      h1(style='text-align: right; color: #00b3ef;')  <%= name %>
       hr
       .form
         h3(style='text-align: left; margin: 1rem 0;')
           | Please Sign In to access your account
-        SigninForm
+        | SigninForm Here
 
 </template>
 
 <script>
-import SigninForm from "~/components/forms/signin";
-
-import SideNav from "~/components/partials/SideNav";
-import AppFooter from "~/components/partials/Footer";
+import SideNav from "~/components/layout/SideNav";
+import AppFooter from "~/components/layout/Footer";
 
 export default {
-  components: { SideNav, AppFooter, SigninForm },
-  // components: {SigninForm},
+  middleware: 'anonymous',
+  components: { SideNav, AppFooter },
   data() {
     return {
       online: true

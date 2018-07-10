@@ -6,12 +6,13 @@ socketio = require '@feathersjs/socketio'
 express = require '@feathersjs/express'
 logger = require 'feathers-logger'
 validator = require 'feathers-hooks-validator'
+{ profiler }  = require 'feathers-profiler'
 
 cors = require 'cors'
 helmet = require 'helmet'
 compress = require 'compression'
 
-storyboard = require './utils/storyboard'
+{consoleListener, wsServerListener} = require './utils/storyboard'
 winston = require './utils/winston'
 global = require './hooks/global'
 auth = require './services/auth'
@@ -21,35 +22,42 @@ services = require './services'
 channels = require './channels'
 jobs = require './jobs'
 
-{json, urlencoded, rest, notFound, errorHandler} = express
+compose = require './services/compose/compose.service'
+uploads = require './services/uploads/uploads.service'
+bulkuploads = require './services/bulkuploads/bulkuploads.service'
 
 api = express feathers!
 
-# setup express middleware
-api.use cors!				# allow Cross-origin resource sharing
-api.use helmet! 			# secure Express apps with various HTTP headers. 
-api.use compress!			# compress response bodies for all request 
-api.use json limit: '10mb' 	# parse incoming requests with JSON payloads using body-parser.
-api.use urlencoded limit: '10mb' extended: true # parse incoming requests with urlencoded payloads using body-parser.
+# End to End logging to file and console ( DEV env only )
+api.configure logger winston # feathers logger mixin using winston console,file transport
+api.configure consoleListener # storyboard console listenter. dev only?
+api.configure socketio wsServerListener api #storyboard websocket listener
 
-# setup feathers plugins
-api.configure socketio storyboard api 	# Setup websocket transport plugin
-api.configure logger winston 			# Logging mixin using winston logger under the hood
-api.configure configuration! 			# Configure application using node-config and options in config directory
-api.configure rest!	 					# Feathers Express framework bindings and REST transport plugin
+api.use cors!
+api.use helmet!
+api.use compress!
+api.use express.json limit: '10mb'
+api.use express.urlencoded limit: '10mb' extended: true
 
-# setup feathers hooks. 
-api.configure validator!	# Hook utility for schema validation. Opt In per service
-api.hooks global			# Application hooks that run on all services
+api.configure configuration!
+api.configure express.rest!
+api.configure validator!
 
-# set up services and adapters
-api.configure orm			# Database adapter for Sequelize ORM || Mongoose ORM
-api.configure services		# the heart of your application. See  ./services directory
-api.configure channels		# Event channels to send real-time events to connected clients 
-api.configure jobs			# Distributed delayed background using node-resque. Requires redis
+api.configure orm
 
-# setup feathers express error handling middleware.
-api.use notFound verbose: true			# returns a NotFound (404) Feathers error.
-api.use errorHandler logger: winston	# formats any error response to a REST call as JSON or HTML
+api.configure auth
+api.configure compose
+api.configure uploads
+api.configure bulkuploads
+api.configure proxyservices
+# api.configure jobs
+
+# profiler must be configured after all services
+api.configure profiler stats: 'detail', logger: log: (payload) -> api.storyboard.profiler.trace 'profiler' payload
+
+api.use express.notFound!
+api.use express.errorHandler logger: winston
+
+api.hooks global
 
 module.exports = api

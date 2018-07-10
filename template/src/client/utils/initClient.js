@@ -15,6 +15,8 @@ import * as storyboard from 'storyboard';
 
 import AuthManagement from 'feathers-authentication-management/lib/client'
 
+import { hooks } from '~utils'
+
 export default async function(ctx, log) {
   
   let { app, store, req, config, nuxtState } = ctx
@@ -22,9 +24,11 @@ export default async function(ctx, log) {
 
   let storage
   let authenticationPath
+  let services
 
   if (process.client) { 
     config = nuxtState.config
+    services = nuxtState.services    
   }
 
   const host = process.env.HOST || config.host 
@@ -34,28 +38,39 @@ export default async function(ctx, log) {
 
   if (process.server) {
 
+    services = Object.keys(req.api.services)
+
     // feathers SSR client config
 
     storage = require('localstorage-memory')
     const rest = require('@feathersjs/rest-client')
     const axios = require('axios')
 
-    feathersClient.configure(rest(`http://${host}:${port}/api`).axios(axios, {
+    // Create an instance using the config defaults provided by the library
+    // At this point the timeout config value is `0` as is the default for the library
+    const instance = axios.create({
+      timeout: 2000,
       headers: {
         Cookie: req.get('cookie')
-        // authorization: req.header('authorization')
       }
-    }))
+    });
+    // ensure no auth header is sent
+    delete instance.defaults.headers.common['Authorization'];
+
+    feathersClient.configure(rest(`http://${host}:${port}/api`).axios(instance))
 
     authenticationPath = '/authentication'
+
+    feathersClient.storyboard = req.api.storyboard
+
+    storage.clear()
     
   }
 
   if (process.client) {
 
     // feathers browser client config 
-
-    app.$storyboard = storyboard
+    // console.log('beforeNuxtRender', nuxtState)
 
     storage = new CookieStorage({ path: '/' })
     const socket = io(`http://${host}:${port}`)
@@ -64,17 +79,17 @@ export default async function(ctx, log) {
 
     socket.on('connect', () => { 
       commit('network/setOnline', true)
-      console.log('nuxt socket.io connected') 
+      // console.log('nuxt socket.io connected') 
     })
     socket.on('event', (data) => { 
-      console.log('nuxt socket.io event', data) 
+      // console.log('nuxt socket.io event', data) 
     })
     socket.on('disconnect', (data) => { 
       commit('network/setOnline', false)
-      console.log('nuxt socket.io disconnect', data) 
+      // console.log('nuxt socket.io disconnect', data) 
     })
     socket.on('reconnect', (data) => { 
-      console.log('nuxt socket.io reconnect', data) 
+      // console.log('nuxt socket.io reconnect', data) 
     })
 
 
@@ -96,96 +111,107 @@ export default async function(ctx, log) {
 
     authenticationPath = '/api/authentication'
 
+    feathersClient.storyboard = storyboard
+
+    feathersClient.on('authenticated', (session) => {
+      const {id, accessToken, user} = session
+      const expireAt = new Date(user.validTill)
+      const expireAfter = expireAt - Date.now()
+      // console.log('::session will expire at ', expireAt)
+      setTimeout(async () => {
+        await feathersClient.logout()
+        if(location.pathname !== '/') {
+          location.reload()
+        }
+        alert('session expired')
+      }, expireAfter);
+
+    })
+
   }  
+
 
     
   feathersClient.configure(authentication({ 
     storage,
     jwtStrategy: 'jwt', 
-    service: 'useraccounts', 
+    service: 'logins', 
     path: authenticationPath
   }))
 
-  app.feathers = {
-    client : feathersClient,
-    vuex : feathersVuex(feathersClient)
-  }
+  feathersClient.hooks(hooks)
 
   app.api = feathersClient 
+  app.api.app = app // circular reference. for fun and profit
 
-  // register service and auth store plugins
-  const { service, auth } = app.feathers.vuex
-
-  service('useraccounts')(ctx.app.store) 
-  service('sourceaddresses')(ctx.app.store)
-  service('partners')(ctx.app.store)
-  service('roles')(ctx.app.store)
-  service('users')(ctx.app.store)
-  service('userprofiles')(ctx.app.store)
-  service('accountgroups')(ctx.app.store)
-  service('accountgrouproles')(ctx.app.store)
-  service('messages')(ctx.app.store)
-  service('messagetypes')(ctx.app.store)
-  service('contacts')(ctx.app.store)
-  service('contactgroups')(ctx.app.store)
-  service('contactlists', { 
-    instanceDefaults: { 
-    } 
-  })(ctx.app.store)
-  service('compose')(ctx.app.store)
-  service('services')(ctx.app.store)
-  service('schedules')(ctx.app.store)
-  // auth({
-  //   userService: 'useraccounts',
-  //   state: {
-  //     useraccount: null
-  //   }
-  // })(ctx.app.store)
+  // register feathers services as store modules using featers-vuex
+  // See https://feathers-plus.github.io/v1/feathers-vuex/service-module.html
+  const { service } = feathersVuex(feathersClient)
+  services.forEach(path => {
+    const options = {
+      skipRequestIfExists: true, // cache first retrieval
+      debug: true
+    }
+    service(path, options)(ctx.app.store)
+  } );
   
 
   // set user object on auth store module
   if (process.server) { 
 
 		// set access token and jwt payload on auth store module
-		// with values deserialized from cookie in req
-		initAuth({
-			req,
-			commit,
-			dispatch,
-			moduleName: 'auth',
-			cookieName: 'feathers-jwt'
-    })
-    if(log) {
-      log.info('initAuth', 'populated access token and jwt payload on auth store module')
+    // with values deserialized from cookie in req
+    // console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$ initClient', req.path)
+
+    if(!req.path.split('/').reverse()[0].includes('css') && req.path != '/') {
+      initAuth({
+        req,
+        commit,
+        dispatch,
+        moduleName: 'auth',
+        cookieName: 'feathers-jwt'
+      })
+      app.api.storyboard.mainStory.info('nuxt', 'initAuth DONE')
     }
+    
     
   }
 
   if(ctx.app.store.state.auth) {
-    
-    if(log) {
-      log.info('initClient', 'attempting authentication')
-    }
-
+  
     if (ctx.app.store.state.auth.accessToken) {
+      
       try {
-        await dispatch('auth/authenticate', { accessToken: ctx.store.state.auth.accessToken })
-        if(log) {
-          log.info('authenticate', 'populated user object on auth store module')
+        if (process.client) { 
+          await dispatch('auth/authenticate', { accessToken: ctx.store.state.auth.accessToken })
+          // console.log('auth/authenticate client side')
+        } else {
+          // do not authenticate request for static resources
+          if(!req.path.split('/').reverse()[0].includes('css') && req.path != '/') {
+            await dispatch('auth/authenticate', { accessToken: ctx.store.state.auth.accessToken })
+            // console.log('auth/authenticate server side')
+          }
         }
+        app.api.storyboard.mainStory.info('nuxt', 'authenticate DONE')
         // console.log('@@@@@@@@@@@@@@@@@', res)
       } catch (error) {
-        if(log) {
-          log.error('initClient', 'dispatch auth/authenticate')
-        }
-        console.log('feathersClient authentication error', error)
+        if (process.client) { 
+          console.error('feathersClient authentication error', error)
+          app.api.storyboard.mainStory.error('nuxt', 'dispatch auth/authenticate')
+          await dispatch('auth/logout')
+          console.log('reauthenticate', ctx.store.state.auth.accessToken)
+          // await dispatch('auth/authenticate', { accessToken: ctx.store.state.auth.accessToken })
+        }        
       }
+      
+    } else {
+      storage.clear() // clear stale cookie if present
+      // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!initClient :: no access token', storage.length)
     }
 
   } else {
-    console.log('initClient :: no access token')
+    // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!initClient :: no vuex auth module')
   }
-
 
   return feathersClient
 

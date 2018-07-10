@@ -14,6 +14,6 @@ export default function (ctx) {
   // register vue ui plugin for casl
   Vue.use(abilitiesPlugin, abilityInstance)
 
-  console.log('casl plugin')
+  // console.log('casl:vue', '@plugins/casl initialized plugin ')
 
 }

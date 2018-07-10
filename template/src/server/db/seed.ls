@@ -59,16 +59,7 @@ seed-all = (app, assert, seeds) ->>
       userroles.push userId: user.id, roleId: role.id
     await assert 'userroles' userroles 
 
-  # 08 accountgrouproles
-  seed-account-group-roles = (group, roles) ->>
-    accountgrouproles = []
-    for role in roles
-      accountgrouproles.push accountGroupId: group.id, roleId: role.id
-    await assert 'accountgrouproles' accountgrouproles 
-
-  # 09 skip audittrail. include as after hook
-
-
+  
   app.info '=========seeding database========='
 
   # 01 create roles lookup
@@ -107,11 +98,4 @@ seed-all = (app, assert, seeds) ->>
   root_user_roles = await seed-user-roles root_user, roles
   app.info 'seeded root_user_roles', root_user_roles.length
 
-  # 08 create root user group roles
-  sudoers_group_roles = await seed-account-group-roles sudoers_group, roles
-  app.info 'seeded sudoers_group_roles', sudoers_group_roles.length
-
-  # 09 skip audittrail. TODO: implement as hook. disable external calls
-
   app.info '=========seeded database========='
-

@@ -10,7 +10,7 @@ export const abilityPlugin = (store) => {
     switch (mutation.type) {
       case 'auth/setUser':
         // store.$router.app.$storyboard.mainStory.info('casl:store:plugin', 'user logged in, setting access rules')
-        console.log('@store/plugins/casl user authenticated, setting access rules')
+        store.app.api.storyboard.mainStory.trace('casl:vuex', '@store/plugins/casl update permissions')
         abilityInstance.update(mutation.payload.rules)
         break
       case 'auth/logout':
