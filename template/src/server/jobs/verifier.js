@@ -11,30 +11,6 @@ export class LocalVerifier extends AuthLocalVerifier {
     // do your custom stuff. You can call internal Verifier methods
     // and reference this.app and this.options. This method must be implemented.
 
-    const data = { 
-      issuedAt: 1530387288,
-      expireAt: 1530390888,
-      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IkI2ZmMi.8XaOR_Rm_tt5Nicl3JxN4egK5Pnl-izTi5sgCZHTML4',
-      user: 
-        { userID: 1,
-          username: 'emmanuel.kimando',
-          email: 'emmanuel.kimando@cellulant.com',
-          partnerName: 'Pewin Cabs',
-          groupID: 1,
-          partnerCredits: 1552 },
-      permissions: 
-        { credits: [ 'create', 'view', 'delete', 'update' ],
-          partners: [ 'view', 'delete', 'update', 'create' ],
-          shortcodes: [ 'delete', 'update', 'create', 'view' ],
-          users: [ 'update', 'create', 'view', 'delete' ] } 
-    }
-
-    let {user} = data
-    user.id = user.userID
-    const payload = { id: user.id }
-
-    console.log("$$$$$$$$$$$LocalVerifier user payload", user, payload);
-
     // the 'user' variable can be any truthy value
     // the 'payload' is the payload for the JWT access token that is generated after successful authentication
     done(null, user, payload);
