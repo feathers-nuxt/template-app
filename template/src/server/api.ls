@@ -19,7 +19,6 @@ auth = require './services/auth'
 orm = require './db/orm'
 
 services = require './services'
-proxyservices = require './proxy'
 channels = require './channels'
 jobs = require './jobs'
 
