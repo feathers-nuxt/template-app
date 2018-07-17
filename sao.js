@@ -37,33 +37,33 @@ module.exports = {
     },
     sequelize_host: {
       message: 'SQL Database host',
-      when: function(database) {
+      when: function({database}) {
         return database == 'sql'
       },
       default: '127.0.0.1'
     },
     sequelize_port: {
       message: 'SQL Database port',
-      when: function(database) {
+      when: function({database}) {
         return database == 'sql'
       },
       default: '3306'
     },
     sequelize_database: {
       message: 'SQL Database name',
-      when: function(database) {
+      when: function({database}) {
         return database == 'sql'
       }
     },
     sequelize_username: {
       message: 'SQL Database username',
-      when: function(database) {
+      when: function({database}) {
         return database == 'sql'
       }
     },
     sequelize_password: {
       message: 'SQL Database password',
-      when: function(database) {
+      when: function({database}) {
         return database == 'sql'
       }
     },
