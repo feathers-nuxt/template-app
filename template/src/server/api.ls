@@ -19,12 +19,9 @@ auth = require './services/auth'
 orm = require './db/orm'
 
 services = require './services'
+proxyservices = require './proxy'
 channels = require './channels'
 jobs = require './jobs'
-
-compose = require './services/compose/compose.service'
-uploads = require './services/uploads/uploads.service'
-bulkuploads = require './services/bulkuploads/bulkuploads.service'
 
 api = express feathers!
 
@@ -45,12 +42,10 @@ api.configure validator!
 
 api.configure orm
 
-api.configure auth
-api.configure compose
-api.configure uploads
-api.configure bulkuploads
-api.configure proxyservices
+api.configure services
 # api.configure jobs
+
+api.configure channels # Set up event channels (see channels.ls)
 
 # profiler must be configured after all services
 api.configure profiler stats: 'detail', logger: log: (payload) -> api.storyboard.profiler.trace 'profiler' payload
