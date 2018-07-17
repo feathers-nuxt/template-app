@@ -51,9 +51,10 @@ module.exports = {
     },
     sequelize_database: {
       message: 'SQL Database name',
-      when: function({database}) {
+      when: function({database, name}) {
         return database == 'sql'
-      }
+      },
+      default: name
     },
     sequelize_username: {
       message: 'SQL Database username',
