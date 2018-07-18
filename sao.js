@@ -23,9 +23,7 @@ module.exports = {
 
     sequelize_dialect: {
       message: 'What dialect of SQL database will you be using',
-      when: function(database) {
-        database == 'sql'
-      },
+      when: function({database}) { database == 'sql' },
       type: 'list',
       choices: [
         { name: 'SQLite', value: 'sqlite', short: 'sqlite' },

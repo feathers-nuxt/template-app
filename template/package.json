@@ -102,6 +102,7 @@
     "pretty-error": "^2.1.1",
     "pug": "^2.0.3",
     "sequelize": "^4.37.6",
+    "sequelize-connect": "^2.1.1",
     "serialize-error": "^2.1.0",
     "serve-favicon": "^2.5.0",
     "socket.io-client": "^2.1.0",
