@@ -32,7 +32,7 @@ orm = require './db/orm'
 api = chain!
 
 # need to bypass the chain here
-config = configuration().bind(global)() 
+# config = configuration().bind(global)() 
 
 /* End to End logging to file and console ( DEV env only ) */
 {consoleListener, wsServerListener} = storyboard
