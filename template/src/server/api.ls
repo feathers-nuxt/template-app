@@ -16,11 +16,15 @@ compress = require 'compression'
 winston = require './utils/winston'
 global = require './hooks/global'
 auth = require './services/auth'
-orm = require './db/orm'
 
 services = require './services'
 channels = require './channels'
 jobs = require './jobs'
+
+
+<% if(database == 'sql') { %>
+orm = require './db/orm'
+<% } %>
 
 api = express feathers!
 
@@ -39,7 +43,9 @@ api.configure configuration!
 api.configure express.rest!
 api.configure validator!
 
+<% if(database == 'sql') { %>
 api.configure orm
+<% } %>
 
 api.configure services
 # api.configure jobs

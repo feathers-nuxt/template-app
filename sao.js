@@ -37,35 +37,25 @@ module.exports = {
     },
     sequelize_host: {
       message: 'SQL Database host',
-      when: function({database}) {
-        return database == 'sql'
-      },
+      when: function({database}) { return database == 'sql' },
       default: '127.0.0.1'
     },
     sequelize_port: {
       message: 'SQL Database port',
-      when: function({database}) {
-        return database == 'sql'
-      },
+      when: function({database}) { return database == 'sql' },
       default: '3306'
     },
     sequelize_database: {
       message: 'SQL Database name',
-      when: function({database}) {
-        return database == 'sql'
-      }
+      when: function({database}) { return database == 'sql' }
     },
     sequelize_username: {
       message: 'SQL Database username',
-      when: function({database}) {
-        return database == 'sql'
-      }
+      when: function({database}) { return database == 'sql' }
     },
     sequelize_password: {
       message: 'SQL Database password',
-      when: function({database}) {
-        return database == 'sql'
-      }
+      when: function({database}) { return database == 'sql' }
     },
 
     cache: {
@@ -81,30 +71,22 @@ module.exports = {
 
     redis_host: {
       message: 'Redis server host address',
-      when: function({cache, resque}) {
-        return !!(cache || resque)
-      },
+      when: function({cache, resque}) { return !!(cache || resque) },
       default: '127.0.0.1'
     },
     redis_port: {
       message: 'Redis server host port',
-      when: function({cache, resque}) {
-        return !!(cache || resque)
-      },
+      when: function({cache, resque}) { return !!(cache || resque) },
       default: '6379'
     },
     redis_database: {
       message: 'Redis database to use',
-      when: function({cache, resque}) {
-        return !!(cache || resque)
-      },
+      when: function({cache, resque}) { return !!(cache || resque) },
       default: '0'
     },
     redis_password: {
       message: 'Password for Redis database',
-      when: function({cache, resque}) {
-        return !!(cache || resque)
-      },
+      when: function({cache, resque}) { return !!(cache || resque) },
       default: ''
     },
 
@@ -127,6 +109,9 @@ module.exports = {
       store: true
     }
 
+  },
+  filters: {
+    'src/server/db/orm.ls': "database == 'sql'"
   },
   move: {
     'gitignore': '.gitignore'
