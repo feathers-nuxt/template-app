@@ -13,11 +13,13 @@ api = require './api' #feathersjs server serves data from db, fs enforcing acces
 process.on 'unhandledRejection', (reason, p) ->
   logger.error 'Unhandled Rejection at: Promise ', p, reason
 
-process.on 'nuxt:build:done', (err) ->
-  api.info 'nuxt:build:done'
-  logger.error err if err
-  # See https://nodejs.org/api/net.html#net_server_listen_port_host_backlog_callback
-  server = app.listen (api.get 'port'), (err) ->
-    throw err if err
-    api.setup server
-    api.info "app listening on http://#{api.get 'host'}:#{api.get 'port'}"
+process.on 'nuxt:build:done', (err) -> 
+  logger.info 'nuxt:build:done' 
+  if err
+    logger.error err
+    process.exit 1
+  api.ready.then (api) ->
+    server = app.listen (api.get 'port'), (er) ->
+      throw er if er
+      api.setup server
+      api.info "app listening on http://#{api.get 'host'}:#{api.get 'port'}"
