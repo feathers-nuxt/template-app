@@ -65,11 +65,11 @@
     "feathers-hooks-rediscache": "^1.1.3",
     "feathers-hooks-validator": "github:kharhys/feathers-hooks-validator",
     "feathers-logger": "^0.3.0",
-    "feathers-memory": "^2.1.1",
+    <% if(database == 'memory') { %>"feathers-memory": "^2.1.3", <% } %>
     "feathers-nedb": "^3.1.0",
     "feathers-notifme": "github:feathers-nuxt/feathers-notifme",
     "feathers-profiler": "^0.1.5",
-    "feathers-sequelize": "^3.1.0",
+    <% if(database == 'sql') { %>"feathers-sequelize": "^3.1.0", <% } %>
     "feathers-vuex": "^1.4.2",
     "form-data": "^2.3.2",
     "fuzzysort": "^1.1.1",

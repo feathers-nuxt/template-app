@@ -21,7 +21,7 @@ global = require './hooks/global'
 services = require './services'
 channels = require './channels'
 
-<% if(database == 'sql') { %>
+<% if(resque) { %>
 jobs = require './jobs'
 <% } %>
 <% if(database == 'sql') { %>
