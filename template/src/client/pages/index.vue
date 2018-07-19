@@ -1,138 +1,275 @@
 <template lang='pug'>
-.page
-  .offline(v-if='!$store.state.network.online')
-    p(v-bind:class='classObject') Connection to server lost
-  .container(v-bind:class='classObject')
-    .content(v-bind:class='classObject')
-      img.header__logo-image(src='~/static/logo.png', alt='Home', v-bind:class='classObject')
-      h1(style='text-align: right; color: #00b3ef;')  <%= name %>
-      hr
-      .form
-        h3(style='text-align: left; margin: 1rem 0;')
-          | Please Sign In to access your account
-        | SigninForm Here
-
+.pageholder 
+  h2 f3
+  .human
+    .head
+    .body
+    .arm.left
+      .limb.upper
+      .limb.lower
+    .arm.right
+      .limb.upper
+      .limb.lower
+    .leg.left
+      .limb.upper
+      .limb.lower
+        .limb.foot
+    .leg.right
+      .limb.upper
+      .limb.lower
+        .limb.foot
+    .limb.easterEgg
 </template>
 
 <script>
-import SideNav from "~/components/layout/SideNav";
-import AppFooter from "~/components/layout/Footer";
-
-export default {
-  middleware: 'anonymous',
-  components: { SideNav, AppFooter },
-  data() {
-    return {
-      online: true
-    };
-  },
-  computed: {
-    classObject() {
-      return {
-        small: this.windowWidth < 666
-      };
-    }
-  },
-  mounted() {
-    // console.log('on it', this)
-    if (!window.navigator) {
-      this.online = false;
-      return;
-    }
-    this.online = Boolean(window.navigator.onLine);
-    window.addEventListener("offline", this._toggleNetworkStatus);
-    window.addEventListener("online", this._toggleNetworkStatus);
-  },
-  methods: {
-    _toggleNetworkStatus({ type }) {
-      this.online = type === "online";
-    }
-  },
-  destroyed() {
-    window.removeEventListener("offline", this._toggleNetworkStatus);
-    window.removeEventListener("online", this._toggleNetworkStatus);
-  }
-};
+  // credits: https://codepen.io/nickspiel/pen/djGrZW
 </script>
 
-<style lang='stylus' scoped>
-.offline
-  display flex
-  align-items center
-  justify-content center
-  p 
-    text-align center
-    font-weight bold
-    color #FE4E02
-    box-shadow 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
-    width 27rem
-    margin-bottom .27rem
-    background #f5f7f9
-    &.small
-      background transparent
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 2px solid #ff8d25;
-  margin: 0;
-  padding: 0;
+<style lang='scss' scoped>
+@keyframes rotateBody {
+  0% {
+    transform: rotate(-35deg);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
+  100% {
+    transform: rotate(-35deg);
+  }
 }
 
-.small.header__logo-image {
-  height: 4.44rem;
+@keyframes headBop {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-1px) translateX(-2px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-1px) translateX(-2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
-.header__logo-image {
-  height: 6.66rem;
+@keyframes bodyBop {
+  0% {
+    transform: translateY(0) rotate(7deg);
+  }
+  25% {
+    transform: translateY(-12px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(0) rotate(7deg);
+  }
+  75% {
+    transform: translateY(-12px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(0) rotate(7deg);
+  }
 }
 
-.container {
-  min-height: 100vh;
+@keyframes rotateLeg {
+  0% {
+    transform: rotate(-40deg);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
+  100% {
+    transform: rotate(-40deg);
+  }
+} 
+
+@keyframes rotateLowerLeg {
+  0% {
+    transform: rotate(5deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(40deg);
+  }
+  75% {
+    transform: rotate(60deg);
+  }
+  100% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes rotateFoot {
+  0% {
+    transform: rotate(-100deg);
+  }
+  50% {
+    transform: rotate(-40deg);
+  }
+  75% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-100deg);
+  }
+}
+
+@keyframes rotateArm {
+  0% {
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(15deg);
+  }
+}
+
+@keyframes rotateLowerArm {
+  50% {
+    transform: rotate(-30deg);
+  }
+}
+
+@keyframes easterEgg {
+  0% {
+    transform: rotate(-80deg);
+  }
+  25% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(-80deg);
+  }
+  75% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(-80deg);
+  }
+}
+
+html {
+  height: 100%;
+}
+
+.pageholder {
+  height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  background: transparent;
 }
 
-.small.container {
-  background: #ffffff;
+h2 {margin: 2rem;}
+
+.human {
+  position: relative;
+  animation: bodyBop 1s infinite;
 }
 
-.small.container .content {
-  padding: 1rem;
+.head {
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+  background-color: black;
+  animation: headBop 1s -0.4s infinite;
 }
 
-.content {
-  background: #ffffff;
-  padding: 2rem;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+.body {
+  width: 30px;
+  height: 80px;
+  border-radius: 20px;
+  background-color: black;
 }
 
-.small.content {
-  box-shadow: none;
+.limb {
+  width: 10px;
+  border-radius: 5px;
+  background-color: #444444;
 }
 
-.small.content > div {
-  width: 90vw;
+.arm {
+  position: absolute;
+  animation: rotateArm 1s infinite;
+  transform-origin: 5px 5px;
+  &.right {
+    top: 45px;
+  }
+  &.left {
+    top: 38px;
+    left: 20px;
+    animation-delay: -0.5s;
+    z-index: -1;
+    .lower {
+      animation-delay: -0.5s;
+    }
+  }
+  .upper {
+    height: 30px;
+  }
+  .lower {
+    position: absolute;
+    top: 20px;
+    height: 30px;
+    transform-origin: 5px 5px;
+    animation: rotateLowerArm 1s infinite;
+  }
 }
 
-.network {
-  font-weight: 400;
-  font-size: 1rem;
+.leg {
+  position: absolute;
+  transform-origin: 5px 5px;
+  animation: rotateLeg 1s infinite;
+  &.left {
+    top: 96px;
+    left: 5px;
+    z-index: 1;
+  }
+  &.right {
+    top: 89px;
+    left: 16px;
+    animation-delay: -0.5s;
+    z-index: -1;
+    .lower,
+    .foot {
+      animation-delay: -0.5s;  
+    }
+  }
+  .upper {
+    height: 35px;
+  }
+  .lower {
+    position: absolute;
+    top: 28px;
+    height: 40px;
+    transform-origin: 5px 5px;
+    animation: 1s rotateLowerLeg infinite;
+  }
 }
 
-.network .circle {
-  display: inline-block;
-  width: 1rem;
-  height: 1rem;
-  background: green;
-  padding: 0.1rem 0.5rem;
-  border-radius: 1rem;
+.foot {
+  position: absolute;
+  top: 30px;
+  height: 20px;
+  transform-origin: 5px 5px;
+  animation: rotateFoot 1s infinite;
 }
 
-.network.offline .circle {
-  background: red;
+.easterEgg {
+  display: none;
+  background-color: black;
+  height: 20px;
+  position: absolute;
+  left: 17px;
+  top: 98px;
+  animation: easterEgg 1s infinite -0.2s;
+  transform-origin: 5px 5px;
 }
 </style>
