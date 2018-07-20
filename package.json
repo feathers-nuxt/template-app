@@ -1,0 +1,30 @@
+{
+  "name": "@feathers-nuxt/template-app",
+  "version": "1.0.1",
+  "description": "sao template for scaffolding feathers+nuxt apps ",
+  "main": "sao.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feathers-nuxt/template-app.git"
+  },
+  "keywords": [
+    "feathers",
+    "nuxt",
+    "sao",
+    "template",
+    "fullstack",
+    "f3",
+    "webpack",
+    "backpack",
+    "scripts"
+  ],
+  "author": "kelvin kharhys <nrhyska@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/feathers-nuxt/template-app/issues"
+  },
+  "homepage": "https://github.com/feathers-nuxt/template-app#readme"
+}
