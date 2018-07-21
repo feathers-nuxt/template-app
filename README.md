@@ -1,18 +1,19 @@
 
 ## Quick Start
-Ensure you have [sao](https://sao.js.org/) installed globally. `yarn` is preferred to `npm`, although you may use the later if you so wish.
+Ensure you have [sao](https://sao.js.org/) installed globally. 
 ```bash
-sao feathers-nuxt/template-app awesome-app --update
+sao @feathers-nuxt/template-app awesome-app --update
 ```
 You will be prompted to answer a couple of questions to determine how the template should be customized to your needs. Sao will then clone the template in this repository and put the customized template inside `awesome-app` directory.
 
 ## Installation
-You may also use `f3` cli instead of `sao` if you install it globally. At the moment the `f3` isn't published to `npm` so you'd install from [github](https://github.com/feathers-nuxt/cli)
+You may also use `f3` cli instead of `sao` if you install it globally. 
 ```bash
-yarn global add github:feathers-nuxt/cli
-# npm i -g github:feathers-nuxt/cli
+yarn global add @feathers-nuxt/cli
+# npm i -g @feathers-nuxt/cli
 f3 init awesome-app
 ```
+> `yarn` is preferred to `npm`, although you may use the later if you so wish.
 
 ## Usage
 Once your app is initialized do `cd awesome-app` to access your new project.
@@ -28,7 +29,6 @@ yarn run
 
 ### Guide
 An application initialized using `f3` will have the following directory stucture
-
 
 ```text
 ├── f3.config.js                              # nuxt & backpack configuration
