@@ -1,10 +1,17 @@
+This is a [sao](https://sao.js.org/) template enabling you to scaffold a feathers+nuxt app in seconds. 
+See documentation [site]( https://feathers-nuxt.netlify.com/) for available features.
 
 ## Quick Start
-Ensure you have [sao](https://sao.js.org/) installed globally. 
+Use npx, if you do not have sao installed. npx comes bundled with npm version 5.2+.
+```bash
+npx sao @feathers-nuxt/template-app awesome-app --update
+```
+You will be prompted to answer a couple of questions to determine how the template should be customized to your needs. Sao will then clone the template in this repository and put the customized template inside `awesome-app` directory.
+
+If you already have sao installed globally, just invoke it with this template. 
 ```bash
 sao @feathers-nuxt/template-app awesome-app --update
 ```
-You will be prompted to answer a couple of questions to determine how the template should be customized to your needs. Sao will then clone the template in this repository and put the customized template inside `awesome-app` directory.
 
 ## Installation
 You may also use `f3` cli instead of `sao` if you install it globally. 
