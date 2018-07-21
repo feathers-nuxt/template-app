@@ -1,5 +1,4 @@
 This is a [sao](https://sao.js.org/) template enabling you to scaffold a feathers+nuxt app in seconds. 
-See documentation [site]( https://feathers-nuxt.netlify.com/) for available features.
 
 ## Quick Start
 Use npx, if you do not have sao installed. npx comes bundled with npm version 5.2+.
@@ -33,9 +32,31 @@ yarn dev
 ```bash
 yarn run
 ```
+### Features
+- SSR ready PWA with offline support.
+- User Authentication and Authorization taken care of.
+- Logging mixin for Feathers app backed by winston with file and console transports.
+- End-to-end, hierarchical, real-time, colorful logs and stories with console and websockets transports.
+- Bring your own database or RESTful backend for data storage.
+- Database migration and seeding npm scripts included.
+- Project build and deployment scripts provided.
+- Use any compile to JS langauge supported by webpack: livescipt, coffescript, typescript,
+- Use any compile to CSS language supported by webpack: stylus, sass, less,
+- Use any compile to HTML language supported by webpack: pug, slim, haml,
+- Use HEML markup language for building responsive emails with any compile to HTML language.
+- Notifications service for sending all kinds of transactional alerts via emails, SMS, pushes, webpushes or slack
+- File uploads service with configurable backing storage: Any store that implements the blob store interface.
+- All feathers services automatically available in `vuex` store.
+- Namespaced routing to prevent conflict of API and UI routes.
+- Optional caching for API routes using Redis on the backend.
+- Automatic caching for API routes using feathers-vuex on the frontend.
+- Automatic caching for UI routes using workbox runtimeCaching.
+- Optional distributed, delayed background job system backed by Redis.
+- iView: A high quality UI Toolkit built on Vue.js
+- DataTable and DataCard UI components compatible with feathers service endpoints.
 
 ### Guide
-An application initialized using `f3` will have the following directory stucture
+An application initialized using `f3` will have the following directory stucture. See documentation [site]( https://feathers-nuxt.netlify.com/) for available features.
 
 ```text
 ├── f3.config.js                              # nuxt & backpack configuration
