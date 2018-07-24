@@ -1,4 +1,4 @@
-This is a [sao](https://sao.js.org/) template enabling you to scaffold a feathers+nuxt app in seconds. 
+This is a [sao](https://sao.js.org/) template enabling you to scaffold a feathers+nuxt app in seconds. See documentation [site]( https://feathers-nuxt.netlify.com/) for available features.
 
 ## Quick Start
 Use npx, if you do not have sao installed. npx comes bundled with npm version 5.2+.
@@ -56,7 +56,7 @@ yarn run
 - DataTable and DataCard UI components compatible with feathers service endpoints.
 
 ### Guide
-An application initialized using `f3` will have the following directory stucture. See documentation [site]( https://feathers-nuxt.netlify.com/) for available features.
+An application initialized using `f3` will have the following directory stucture. 
 
 ```text
 ├── f3.config.js                              # nuxt & backpack configuration
