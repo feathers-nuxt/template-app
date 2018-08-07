@@ -31,7 +31,6 @@ authentication:
   strategies:
   - jwt
   - local
-  - rest
   path: authentication
   service: users
   entity: user

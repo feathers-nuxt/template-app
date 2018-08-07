@@ -1,0 +1,1 @@
+This folder is for file-based databases such as ne-db, sqlite

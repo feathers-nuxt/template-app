@@ -58,7 +58,7 @@
     "death": "^1.1.0",
     "debug": "^3.1.0",
     "exceljs-transform-stream": "^0.4.0",
-    "f3": "github:feathers-nuxt/cli",
+    "f3": "@feathers-nuxt/cli",
     "feathers-authentication-hooks": "^0.2.0",
     "feathers-authentication-management": "^2.0.0",
     "feathers-blob": "^2.0.0",
@@ -68,7 +68,7 @@
     "feathers-logger": "^0.3.0",
     <% if(database == 'memory') { %>"feathers-memory": "^2.1.3", <% } %>
     "feathers-nedb": "^3.1.0",
-    "feathers-notifme": "github:feathers-nuxt/feathers-notifme",
+    "feathers-notifme": "@feathers-nuxt/feathers-notifme",
     "feathers-profiler": "^0.1.5",
     <% if(database == 'sql') { %>"feathers-sequelize": "^3.1.0", <% } %>
     "feathers-vuex": "^1.4.2",
