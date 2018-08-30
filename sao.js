@@ -95,6 +95,32 @@ module.exports = {
       default: true
     },
 
+    smtp: {
+      type: 'confirm',
+      message: 'Set up SMPT credentials for sending emails?',
+      default: true
+    },
+    smtp_host: {
+      message: 'SMTP server host address',
+      when: function({smtp}) { return !!(smtp) },
+      default: '127.0.0.1'
+    },
+    smtp_port: {
+      message: 'SMTP server host port',
+      when: function({smtp}) { return !!(smtp) },
+      default: '6379'
+    },
+    smtp_username: {
+      message: 'Email address of SMTP user',
+      when: function({smtp}) { return !!(smtp) },
+      default: 'no-reply@example.com'
+    },
+    smtp_password: {
+      message: 'Password for SMTP User',
+      when: function({smtp}) { return !!(smtp) },
+      default: '5trong3r'
+    },
+
     username: {
       message: 'What is your GitHub username?',
       default: ':gitUser:',
