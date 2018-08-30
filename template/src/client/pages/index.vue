@@ -1,275 +1,216 @@
 <template lang='pug'>
-.pageholder 
-  h2 f3
-  .human
-    .head
-    .body
-    .arm.left
-      .limb.upper
-      .limb.lower
-    .arm.right
-      .limb.upper
-      .limb.lower
-    .leg.left
-      .limb.upper
-      .limb.lower
-        .limb.foot
-    .leg.right
-      .limb.upper
-      .limb.lower
-        .limb.foot
-    .limb.easterEgg
+.wrap.fixed
+  header
+    .logo
+    nav
+      ul
+        li
+        li
+        li
+  section.transparent
+    .headline
+    .text
+    .text
+    .button
+  section.cards
+    .card
+      img(src='https://imgplaceholder.com/500x300/transparent/ddd/ion-image', alt='')
+      .content
+        .headline
+        .text
+        .text
+        .button
+    .card
+      img(src='https://imgplaceholder.com/500x300/transparent/ddd/ion-image', alt='')
+      .content
+        .headline
+        .text
+        .text
+        .button
+    .card
+      img(src='https://imgplaceholder.com/500x300/transparent/ddd/ion-image', alt='')
+      .content
+        .headline
+        .text
+        .text
+        .button
+  section.contentbox
+    .headline
+    .text
+    .text
+    .text
+    .text
+    .text
+    .text
+    .text
+    .text
+    .text
+    .button
+  footer
+    .logo
+    nav
+      ul
+        li
+        li
+        li
 </template>
 
 <script>
-  // credits: https://codepen.io/nickspiel/pen/djGrZW
+  // https://codepen.io/mfritsch/pen/VYdeEE
 </script>
 
-<style lang='scss' scoped>
-@keyframes rotateBody {
-  0% {
-    transform: rotate(-35deg);
-  }
-  50% {
-    transform: rotate(20deg);
-  }
-  100% {
-    transform: rotate(-35deg);
-  }
-}
+<style lang='sass' >
+\:root
+  --clr1: #fefefe
+  --clr2: #333
+  --clr3: #efefef
+  --clr4: tomato
+  --border-radius: 7px
+  --text-radius: 50em
 
-@keyframes headBop {
-  0% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-1px) translateX(-2px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-1px) translateX(-2px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
+body
+  *, :after, :before
+    box-sizing: border-box
+  background: var(--clr1)
+  padding: 50px 0 0 0
+  margin: 0 10px
 
-@keyframes bodyBop {
-  0% {
-    transform: translateY(0) rotate(7deg);
-  }
-  25% {
-    transform: translateY(-12px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(0) rotate(7deg);
-  }
-  75% {
-    transform: translateY(-12px) rotate(0deg);
-  }
-  100% {
-    transform: translateY(0) rotate(7deg);
-  }
-}
+.transparent
+  background: transparent !important
 
-@keyframes rotateLeg {
-  0% {
-    transform: rotate(-40deg);
-  }
-  50% {
-    transform: rotate(20deg);
-  }
-  100% {
-    transform: rotate(-40deg);
-  }
-} 
+.wrap
+  max-width: 960px
+  min-width: 360px
+  margin: 0 auto
+  position: relative
+  &.sticky
+    margin-top: 150px
 
-@keyframes rotateLowerLeg {
-  0% {
-    transform: rotate(5deg);
-  }
-  25% {
-    transform: rotate(10deg);
-  }
-  50% {
-    transform: rotate(40deg);
-  }
-  75% {
-    transform: rotate(60deg);
-  }
-  100% {
-    transform: rotate(5deg);
-  }
-}
+.fluid .wrap
+  max-width: 100% !important
 
-@keyframes rotateFoot {
-  0% {
-    transform: rotate(-100deg);
-  }
-  50% {
-    transform: rotate(-40deg);
-  }
-  75% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-100deg);
-  }
-}
+header
+  background: var(--clr2)
+  padding: 50px
+  width: 100%
+  border-radius: var(--border-radius)
+  position: relative
+  z-index: 99
 
-@keyframes rotateArm {
-  0% {
-    transform: rotate(15deg);
-  }
-  50% {
-    transform: rotate(-15deg);
-  }
-  100% {
-    transform: rotate(15deg);
-  }
-}
+.wrap.sticky header
+  background: var(--clr2)
+  padding: 50px
+  position: fixed
+  top: 0px
+  max-width: 960px
+  width: calc(100% - 20px)
+  min-width: 360px
+  border-radius: 0px 0px var(--border-radius) var(--border-radius)
 
-@keyframes rotateLowerArm {
-  50% {
-    transform: rotate(-30deg);
-  }
-}
+.fluid .wrap.sticky header
+  max-width: 100% !important
 
-@keyframes easterEgg {
-  0% {
-    transform: rotate(-80deg);
-  }
-  25% {
-    transform: rotate(-20deg);
-  }
-  50% {
-    transform: rotate(-80deg);
-  }
-  75% {
-    transform: rotate(-20deg);
-  }
-  100% {
-    transform: rotate(-80deg);
-  }
-}
+header
+  .logo
+    background: var(--clr3)
+    width: 50px
+    height: 50px
+    border-radius: var(--text-radius)
+  nav
+    position: absolute
+    right: 0
+    top: 50%
+    transform: translate(-50px, -50%)
+    ul li
+      display: inline-block
+      list-style: none
+      width: 60px
+      height: 10px
+      background: var(--clr3)
+      border-radius: var(--text-radius)
 
-html {
-  height: 100%;
-}
+section
+  background: var(--clr2)
+  padding: 100px 50px
+  width: 100%
+  border-radius: var(--border-radius)
+  position: relative
+  margin: 10px 0 0 0
+  .headline
+    display: block
+    margin: 0 auto
+    list-style: none
+    max-width: 260px
+    height: 30px
+    background: var(--clr3)
+    border-radius: var(--text-radius)
+  .text
+    display: block
+    margin: 10px auto
+    max-width: 500px
+    height: 14px
+    background: var(--clr3)
+    border-radius: var(--text-radius)
+  .button
+    display: block
+    margin: 20px auto 0 auto
+    max-width: 120px
+    height: 35px
+    background: var(--clr3)
+    border-radius: var(--text-radius)
+  &.contentbox
+    .headline
+      margin: 10px 0 !important
+      max-width: 65%
+    .text
+      margin: 10px 0 !important
+      max-width: 100%
+    .button
+      margin: 10px 0 !important
+  &.cards
+    padding: 0px
+    background: transparent
+    display: table
+    .card
+      background: var(--clr2)
+      width: calc(33.6% - 10px)
+      margin: 0 5px
+      border-radius: var(--border-radius)
+      display: inline-block
+      &:first-child
+        margin: 0 5px 0 0
+      &:last-child
+        margin: 0 0 0 5px
+      .content
+        padding: 40px
+      img
+        width: 100%
+        height: auto
+        border-radius: var(--border-radius) var(--border-radius) 0px 0px
 
-.pageholder {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+footer
+  background: var(--clr3)
+  padding: 50px
+  width: 100%
+  border-radius: var(--border-radius) var(--border-radius) 0px 0px
+  position: relative
+  margin: 10px 0 0 0
+  .logo
+    background: var(--clr2)
+    width: 50px
+    height: 50px
+    border-radius: var(--text-radius)
+  nav
+    position: absolute
+    right: 0
+    top: 50%
+    transform: translate(-50px, -50%)
+    ul li
+      display: inline-block
+      list-style: none
+      width: 60px
+      height: 10px
+      background: var(--clr2)
+      border-radius: var(--text-radius)
 
-h2 {margin: 2rem;}
-
-.human {
-  position: relative;
-  animation: bodyBop 1s infinite;
-}
-
-.head {
-  width: 30px;
-  height: 30px;
-  border-radius: 20px;
-  background-color: black;
-  animation: headBop 1s -0.4s infinite;
-}
-
-.body {
-  width: 30px;
-  height: 80px;
-  border-radius: 20px;
-  background-color: black;
-}
-
-.limb {
-  width: 10px;
-  border-radius: 5px;
-  background-color: #444444;
-}
-
-.arm {
-  position: absolute;
-  animation: rotateArm 1s infinite;
-  transform-origin: 5px 5px;
-  &.right {
-    top: 45px;
-  }
-  &.left {
-    top: 38px;
-    left: 20px;
-    animation-delay: -0.5s;
-    z-index: -1;
-    .lower {
-      animation-delay: -0.5s;
-    }
-  }
-  .upper {
-    height: 30px;
-  }
-  .lower {
-    position: absolute;
-    top: 20px;
-    height: 30px;
-    transform-origin: 5px 5px;
-    animation: rotateLowerArm 1s infinite;
-  }
-}
-
-.leg {
-  position: absolute;
-  transform-origin: 5px 5px;
-  animation: rotateLeg 1s infinite;
-  &.left {
-    top: 96px;
-    left: 5px;
-    z-index: 1;
-  }
-  &.right {
-    top: 89px;
-    left: 16px;
-    animation-delay: -0.5s;
-    z-index: -1;
-    .lower,
-    .foot {
-      animation-delay: -0.5s;  
-    }
-  }
-  .upper {
-    height: 35px;
-  }
-  .lower {
-    position: absolute;
-    top: 28px;
-    height: 40px;
-    transform-origin: 5px 5px;
-    animation: 1s rotateLowerLeg infinite;
-  }
-}
-
-.foot {
-  position: absolute;
-  top: 30px;
-  height: 20px;
-  transform-origin: 5px 5px;
-  animation: rotateFoot 1s infinite;
-}
-
-.easterEgg {
-  display: none;
-  background-color: black;
-  height: 20px;
-  position: absolute;
-  left: 17px;
-  top: 98px;
-  animation: easterEgg 1s infinite -0.2s;
-  transform-origin: 5px 5px;
-}
 </style>

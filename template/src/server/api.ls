@@ -8,10 +8,13 @@ express = require '@feathersjs/express'
 validator = require 'feathers-hooks-validator'
 {profiler}  = require 'feathers-profiler'
 logger = require 'feathers-logger'
+swagger = require 'feathers-swagger'
 
 compress = require 'compression'
 helmet = require 'helmet'
 cors = require 'cors'
+
+{mainStory} = require 'storyboard'
 
 storyboard = require './utils/storyboard'
 chain = require './utils/async-chain'
@@ -21,12 +24,8 @@ global = require './hooks/global'
 services = require './services'
 channels = require './channels'
 
-<% if(resque) { %>
-jobs = require './jobs'
-<% } %>
-<% if(database == 'sql') { %>
-orm = require './db/orm'
-<% } %>
+<% if(resque) { %>jobs = require './jobs'<% } %>
+<% if(database == 'sql') { %>orm = require './db/orm'<% } %>
 
 
 api = chain!
@@ -50,19 +49,22 @@ api.configure configuration!
 api.configure express.rest!
 api.configure validator!
 
-<% if(database == 'sql') { %>
-api.configure orm # set up sequelize db connection
-<% } %>
+<% if(database == 'sql') { %>api.configure orm # set up sequelize db connection <% } %>
 
-<% if(resque) { %>
-api.configure jobs # set up persistent background jobs 
-<% } %>
+api.configure swagger {
+	basePath: '/api/'
+	docsPath: '/docs'
+	uiIndex: path.resolve 'src/client/static/docs.html'
+	info: title: 'API Documentation', description: 'API Documentation' 
+}
+
+<% if(resque) { %>api.configure jobs # set up persistent background jobs <% } %>
 
 api.configure services # see services directory
 api.configure channels # see channels.ls
 
 # profiler must be configured after all services
-api.configure profiler stats: 'detail', logger: log: (payload) -> api.storyboard.profiler.trace 'profiler' payload
+api.configure profiler stats: 'detail', logger: log: (payload) -> mainStory.info 'profiler' payload
 
 api.use express.notFound!
 api.use express.errorHandler logger: winston

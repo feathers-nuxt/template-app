@@ -1,6 +1,6 @@
-# any file or directory is automatically configured as service
+# any file or directory automatically configured as service
 fs = require 'fs'
-path = require 'path' 
+path = require 'path'
 
 services = fs.readdirSync path.join __dirname, '.'
   .filter (file) -> file isnt 'index.ls'

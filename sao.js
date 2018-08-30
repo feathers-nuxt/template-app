@@ -14,7 +14,8 @@ module.exports = {
       message: 'What type of database will you be using',
       type: 'list',
       choices: [
-        { name: 'In memory storage;', value: 'memory', short: 'memory' },
+        { name: 'Memory Storage', value: 'memory', short: 'memory' },
+        { name: 'File Storage', value: 'file', short: 'file' },
         { name: 'SQL (Relational) Database', value: 'sql', short: 'sql' },
         { name: 'NoSQL (Document) Database', value: 'nosql', short: 'nosql' }
       ],
@@ -88,6 +89,11 @@ module.exports = {
       default: ''
     },
 
+    documentation: {
+      type: 'confirm',
+      message: 'Include swagger for API endpoint documentation?',
+      default: true
+    },
 
     username: {
       message: 'What is your GitHub username?',

@@ -1,7 +1,7 @@
 debug = (require 'debug') 'notifications-service'
 
-# createService = (require '../../notifications/feathers-notifme')
-createService = require 'feathers-notifme'
+createService = require '@feathers-nuxt/feathers-notifme'
+
 hooks = require './notifications.hooks'
 
 module.exports = ->
