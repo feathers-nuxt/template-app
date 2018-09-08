@@ -31,6 +31,7 @@
   "dependencies": {
     "@casl/ability": "^2.3.0",
     "@casl/vue": "^0.2.0",
+    "@feathers-nuxt/cli": "^1.0.2",
     "@feathers-nuxt/feathers-notifme": "^1.0.1-beta.1",
     "@feathersjs/authentication": "^2.1.7",
     "@feathersjs/authentication-client": "^1.0.2",
@@ -57,7 +58,6 @@
     "dauria": "^2.0.0",
     "death": "^1.1.0",
     "debug": "^3.1.0",
-    "f3": "@feathers-nuxt/cli",
     "feathers-authentication-hooks": "^0.2.0",
     "feathers-authentication-management": "^2.0.0",
     "feathers-blob": "^2.0.0",
@@ -116,16 +116,11 @@
     "uberproto": "^1.2.0",
     "vue": "^2.5.16",
     "vue-media-query-mixin": "^0.1.0",
-    "vue-mq": "^0.2.1",
     "vue-scrollto": "^2.11.0",
     "vuebar": "0.0.18",
     "vuex-router-sync": "^5.0.0",
     "winston": "^3.0.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "mocha": "^5.1.1",
-    "request": "^2.85.0",
-    "request-promise": "^4.2.2"
   }
 }

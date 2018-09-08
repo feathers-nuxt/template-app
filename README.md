@@ -3,13 +3,13 @@ This is a [sao](https://sao.js.org/) template enabling you to scaffold a feather
 ## Quick Start
 Use npx, if you do not have sao installed. npx comes bundled with npm version 5.2+.
 ```bash
-npx sao @feathers-nuxt/template-app awesome-app --update
+npx sao @feathers-nuxt/template-app --update awesome-app
 ```
 You will be prompted to answer a couple of questions to determine how the template should be customized to your needs. Sao will then clone the template in this repository and put the customized template inside `awesome-app` directory.
 
 If you already have sao installed globally, just invoke it with this template. 
 ```bash
-sao @feathers-nuxt/template-app awesome-app --update
+sao @feathers-nuxt/template-app --update awesome-app
 ```
 
 ## Installation

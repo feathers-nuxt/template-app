@@ -115,6 +115,7 @@ module.exports = {
       { src: '~/plugins/fuzzysort' },
       { src: '~/plugins/storyboard' },
       { src: '~/plugins/media-query' },
+      { src: '~/plugins/async-computed' },
       { src: '~/plugins/vuebar', ssr: false },
       { src: '~/plugins/feathers', ssr: false },
       { src: '~/plugins/scrollto', ssr: false },

@@ -1,58 +1,66 @@
 <template lang='pug'>
-.wrap.fixed
-  header
-    .logo
+.index
+  .wrap.fixed
+    header
+      .logo
+      nav
+        ul
+          li
+          li
+          li
+    section.transparent
+      .headline
+      .text
+      .text
+      .button
+    section.cards
+      .card
+        img(src='https://imgplaceholder.com/500x300/transparent/ddd/ion-image', alt='')
+        .content
+          .headline
+          .text
+          .text
+          .button
+      .card
+        img(src='https://imgplaceholder.com/500x300/transparent/ddd/ion-image', alt='')
+        .content
+          .headline
+          .text
+          .text
+          .button
+      .card
+        img(src='https://imgplaceholder.com/500x300/transparent/ddd/ion-image', alt='')
+        .content
+          .headline
+          .text
+          .text
+          .button
+    section.contentbox
+      .headline
+      .text
+      .text
+      .text
+      .text
+      .text
+      .text
+      .text
+      .text
+      .text
+      .button
+    footer
+      .logo
+      nav
+        ul
+          li
+          li
+          li
+  .sticky
     nav
       ul
-        li
-        li
-        li
-  section.transparent
-    .headline
-    .text
-    .text
-    .button
-  section.cards
-    .card
-      img(src='https://imgplaceholder.com/500x300/transparent/ddd/ion-image', alt='')
-      .content
-        .headline
-        .text
-        .text
-        .button
-    .card
-      img(src='https://imgplaceholder.com/500x300/transparent/ddd/ion-image', alt='')
-      .content
-        .headline
-        .text
-        .text
-        .button
-    .card
-      img(src='https://imgplaceholder.com/500x300/transparent/ddd/ion-image', alt='')
-      .content
-        .headline
-        .text
-        .text
-        .button
-  section.contentbox
-    .headline
-    .text
-    .text
-    .text
-    .text
-    .text
-    .text
-    .text
-    .text
-    .text
-    .button
-  footer
-    .logo
-    nav
-      ul
-        li
-        li
-        li
+        li 
+          a(href='/api/docs' target='_blank') Swagger
+        li 
+          a(href='http://127.0.0.1:8090/' target='_blank') StoryBoard
 </template>
 
 <script>
@@ -60,9 +68,24 @@
 </script>
 
 <style lang='sass' >
+.sticky
+  border-top: 2px solid #666
+  padding: .5rem
+  position: fixed
+  bottom: 0
+  left: 0
+  width: 100%
+  padding: .5rem 2rem
+  background: #efefef
+  ul
+    display: flex
+    list-style-type: none
+    li
+      width: 100px
+      font-weight: bold
 \:root
-  --clr1: #fefefe
-  --clr2: #333
+  --clr1: #bababa
+  --clr2: #666
   --clr3: #efefef
   --clr4: tomato
   --border-radius: 7px
