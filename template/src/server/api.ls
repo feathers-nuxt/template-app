@@ -7,8 +7,8 @@ express = require '@feathersjs/express'
 
 validator = require 'feathers-hooks-validator'
 {profiler}  = require 'feathers-profiler'
-logger = require 'feathers-logger'
 swagger = require 'feathers-swagger'
+logger = require 'feathers-logger'
 
 {mainStory} = require 'storyboard'
 compress = require 'compression'
@@ -25,7 +25,6 @@ channels = require './channels'
 
 <% if(resque) { %>jobs = require './jobs'<% } %>
 <% if(database == 'sql') { %>orm = require './db/orm'<% } %>
-
 
 api = chain!
 
@@ -48,16 +47,10 @@ api.configure configuration!
 api.configure express.rest!
 api.configure validator!
 
-<% if(database == 'sql') { %>api.configure orm # set up sequelize db connection <% } %>
+<% if(database == 'sql') { %> api.configure orm # set up sequelize db connection <% } %>
+<% if(resque) { %> api.configure jobs # set up persistent background jobs <% } %>
 
-api.configure swagger {
-	basePath: '/api/'
-	docsPath: '/docs'
-	uiIndex: path.resolve 'src/client/static/docs.html'
-	info: title: 'API Documentation', description: 'API Documentation' 
-}
-
-<% if(resque) { %>api.configure jobs # set up persistent background jobs <% } %>
+api.configure swagger docsPath: '/docs', basePath: '/api', uiIndex: path.resolve __dirname, '../client/static/docs.html'
 
 api.configure services # see services directory
 api.configure channels # see channels.ls
