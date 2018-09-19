@@ -213,6 +213,8 @@ export default async function(ctx, log) {
     // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!initClient :: no vuex auth module')
   }
 
+  feathersClient.authManagement = new AuthManagement(feathersClient)
+  
   return feathersClient
 
 }

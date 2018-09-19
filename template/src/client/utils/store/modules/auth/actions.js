@@ -1,40 +1,4 @@
 export default {
-  async signup(store, params) {
-    const { state, rootState, getters, rootGetters, commit, dispatch } = store
-    console.log('store auth/register >>>>>', params)
-    //        this.app.router.app.$Notice.success({title: 'titl', desc: 'messag', duration: 16})
-    dispatch('logout')
-    commit('SIGN_UP_REQUEST')
-    try {
-      const user = await this.app.api.services.users.create(params)
-      this.app.router.app.$Notice.success({
-        title: 'Account signup successful',
-        desc: `Welcome ${params.first_name} ${params.last_name} to tendapa marketplace. Check you email ${user.email} for instructions on verification of your account`,
-        duration: 16
-      })
-      commit('SIGN_UP_SUCCESS', user)
-      try {
-        const auth = await dispatch('authenticate', {
-          strategy: 'local',
-          email: params.email,
-          password: params.password
-        })
-        commit('SIGN_IN_SUCCESS', auth)
-      } catch (error) {
-        console.log('auth signup authenticate error', error)
-        return Promise.reject(error)
-      }
-    } catch (error) {
-      this.app.router.app.$Notice.error({
-        title: error.code + ': ' + error.name,
-        desc: error.message,
-        duration: 16
-      })
-      //            console.log('auth signup error', error)
-      commit('SIGN_UP_FAILURE', error)
-      return Promise.reject(error)
-    }
-  },
   async authenticate(store, credentials) {
     const { commit, state, dispatch } = store
     const feathersClient = this.app.api

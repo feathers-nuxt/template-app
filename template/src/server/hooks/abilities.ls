@@ -20,7 +20,7 @@ defineRulesFor = (user) ->
   can 'create'  <[ contacts ]> if Object.keys(user.authorization).includes 'contacts' and user.authorization.contacts.includes 'create'
   rules
 
-defineAbilitiesFor = (user) ->
+defineAbilityFor = (user) ->
   rules = defineRulesFor user
   # if user
     # can 'manage', ['contacts', 'messages'], {createdBy: user._id}
@@ -40,7 +40,7 @@ module.exports = (name) ->
     service = if name then hook.app.service name else hook.service
     serviceName = name or hook.path
     rules = defineRulesFor hook.result.useraccount
-    ability = defineAbilitiesFor hook.result.useraccount
+    ability = defineAbilityFor hook.result.useraccount
     throwUnlessCan = (action, resource) ->
       throw new Forbidden "You are @@@@@@@@@@@@@@@@@@@@ not allowed to #{action} #{serviceName}" if ability.cannot action, resource
       return 

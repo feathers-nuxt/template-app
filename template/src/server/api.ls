@@ -10,7 +10,6 @@ validator = require 'feathers-hooks-validator'
 swagger = require 'feathers-swagger'
 logger = require 'feathers-logger'
 
-{mainStory} = require 'storyboard'
 compress = require 'compression'
 helmet = require 'helmet'
 cors = require 'cors'
@@ -47,16 +46,18 @@ api.configure configuration!
 api.configure express.rest!
 api.configure validator!
 
-<% if(database == 'sql') { %> api.configure orm # set up sequelize db connection <% } %>
-<% if(resque) { %> api.configure jobs # set up persistent background jobs <% } %>
+<% if(database == 'sql') { %>api.configure orm # set up sequelize db connection <% } %>
+<% if(resque) { %>api.configure jobs # set up persistent background jobs <% } %>
 
-api.configure swagger docsPath: '/docs', basePath: '/api', uiIndex: path.resolve __dirname, '../client/static/docs.html'
+<% if(database == 'documentation') { %>api.configure swagger docsPath: '/docs', basePath: '/api', uiIndex: path.resolve __dirname, '../client/static/docs.html' <% } %>
 
 api.configure services # see services directory
 api.configure channels # see channels.ls
 
 # profiler must be configured after all services
-api.configure profiler stats: 'detail', logger: log: (payload) -> mainStory.info 'profiler' payload
+api.configure ({storyboard}) ->
+  api.configure profiler stats: 'detail', logger: log: (payload) -> 
+    storyboard[storyboard.path].info storyboard.path, payload
 
 api.use express.notFound!
 api.use express.errorHandler logger: winston

@@ -7,7 +7,8 @@ openProfilerStory = (context) ->
   {app, path, method, params, service} = context
   clientStories = if params.query and params.query.storyId then Array.of params.query.storyId else void
   story = src: 'server' title: "#{method} /#{path}" level: 'DEBUG' extraParents: clientStories
-  app.storyboard[path] = app.storyboard.profiler = app.storyboard.mainStory.child story
+  app.storyboard[path] = app.storyboard.mainStory.child story
+  app.storyboard.path = path
   # console.log '@@@@@@@@@@@@@@@@openProfilerStory', params.query
   delete params.query.storyId if params.query and params.query.storyId
   context
@@ -33,15 +34,17 @@ setParamsForRestProxy = (context) ->>
       delete query.$skip 
   context
 
+authenticationIsNecessary = (hook) -> 
+  authPath = hook.app.get('authentication').path
+  authManagementPath = 'authManagement'
+  hook.params.provider and hook.path isnt authPath and hook.path isnt authManagementPath 
+
 module.exports =
   before: 
     all: [
       # logger!
       openProfilerStory
-      _.when(
-        (hook) -> hook.params.provider and hook.path isnt hook.app.get('authentication').path,
-        authentication.hooks.authenticate [ 'jwt' ]
-      )
+      _.when authenticationIsNecessary, authentication.hooks.authenticate [ 'jwt' ]
       # setParamsForRestProxy
     ]
     find: []
