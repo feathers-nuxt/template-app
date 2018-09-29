@@ -10,7 +10,7 @@ authorize = require '../../hooks/abilities'
 dispatcher = require '../../notifications/dispatcher'
 
 authManagementOptions =
-  service: 'useraccounts'
+  service: 'users'
   path: 'authManagement'
   notifier: dispatcher
   longTokenLen: 15
@@ -20,11 +20,20 @@ authManagementOptions =
   # resetDelay:
   # identifyUserProps:
 
+# the string username is replaced with name of logged in user
+# https://github.com/feathersjs/authentication/issues/508
+# work around: manually set this configuration
+local_auth_config =
+  # entity: 'data'
+  service: 'users'
+  usernameField: 'username'
+  passwordField: 'password'
+  
 isAction = (args) -> (hook) -> Array.of(args).includes hook.data.action
 
 updatePassword = (context) ->>
   {app, data, result} = context
-  res = await app.services.useraccounts.patch result.id, password: data.password
+  res = await app.services.users.patch result.id, password: data.password
   console.log '####### updatePassword' data, result, res
   context
 
@@ -46,15 +55,6 @@ logAuthenticationError = (context) ->
   console.log 'logAuthenticationError logAuthenticationError logAuthenticationError' , context.error
   context
 
-# the string username is replaced with name of logged in user
-# https://github.com/feathersjs/authentication/issues/508
-# work around: manually set this configuration
-local_auth_config =
-  # entity: 'data'
-  service: 'users'
-  usernameField: 'username'
-  passwordField: 'password'
-
 module.exports = ->
   app = @
   config = app.get 'authentication'
@@ -73,7 +73,7 @@ module.exports = ->
     error:
       all: [ logAuthenticationError ]
   }
-  app.service('authManagement').hooks {
+  (app.service 'authManagement' ).hooks {
     after:
       create: [
         _.iff(isAction('verifySignupLong'), updatePassword),

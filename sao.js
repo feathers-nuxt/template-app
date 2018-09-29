@@ -30,7 +30,7 @@ module.exports = {
         { name: 'SQLite', value: 'sqlite', short: 'sqlite' },
         { name: 'MySQL', value: 'mysql', short: 'mysql' },
         { name: 'MSSQL', value: 'mssql', short: 'mssql' },
-        { name: 'MSSQL', value: 'postgres', short: 'postgres' }
+        { name: 'PostgreSQL', value: 'postgresql', short: 'postgresql' }
       ],
       default: 'memory'
     },
@@ -60,12 +60,12 @@ module.exports = {
     cache: {
       type: 'confirm',
       message: 'Cache API responses with redis?',
-      default: true
+      default: false
     },
     resque: {
       type: 'confirm',
       message: 'Queue background jobs with redis?',
-      default: true
+      default: false
     },
 
     redis_host: {
@@ -141,7 +141,8 @@ module.exports = {
 
   },
   filters: {
-    'src/server/db/orm.ls': "database == 'sql'"
+    'src/server/db/orm.ls': "database == 'sql'",
+    'src/server/jobs/*': "database == 'resque'"
   },
   move: {
     'gitignore': '.gitignore'
