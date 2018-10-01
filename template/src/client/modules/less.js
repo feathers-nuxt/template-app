@@ -12,8 +12,7 @@ export default function () {
     })
     for (const lessLoader of lessLoaders) {
       for (const rule of lessLoader.oneOf) {
-          rule.use.push(loader)
-          console.log('<<<<<<<', rule)
+        rule.use.push(loader)
       }
     }
   })

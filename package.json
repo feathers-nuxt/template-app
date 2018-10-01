@@ -4,6 +4,7 @@
   "description": "sao template for scaffolding feathers+nuxt apps ",
   "main": "sao.js",
   "scripts": {
+    "release": "release-it",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/feathers-nuxt/template-app/issues"
   },
-  "homepage": "https://github.com/feathers-nuxt/template-app#readme"
+  "homepage": "https://github.com/feathers-nuxt/template-app#readme",
+  "devDependencies": {
+    "release-it": "^7.6.1"
+  }
 }
