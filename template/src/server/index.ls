@@ -19,7 +19,7 @@ process.on 'nuxt:build:done', (err) ->
     logger.error err
     process.exit 1
   api.ready.then (api) ->
-    server = app.listen (api.get 'port'), (er) ->
+    ui = app.listen (api.get 'port'), (er) ->
       throw er if er
-      api.setup server
+      api.setup ui
       api.info "app listening on http://#{api.get 'host'}:#{api.get 'port'}"

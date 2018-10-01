@@ -1,5 +1,9 @@
 This is a [sao](https://sao.js.org/) template enabling you to scaffold a feathers+nuxt app in seconds. See documentation [site]( https://feathers-nuxt.netlify.com/) for available features.
 
+**THIS IS ALPHA, BE CAREFUL**
+
+I'm also VERY interested in feedback / PRs, so send them my way or email me!
+
 ## Quick Start
 Use npx, if you do not have sao installed. npx comes bundled with npm version 5.2+.
 ```bash
