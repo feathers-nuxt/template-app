@@ -65,7 +65,7 @@
     <% if(database == 'memory') { %>"feathers-nedb": "^3.1.0", <% } %>
     "feathers-profiler": "^0.1.5",
     <% if(database == 'sql') { %>"feathers-sequelize": "^3.1.0", <% } %>
-    <% if(documentation) { %>"feathers-swagger": "^0.7.2", <% } %>
+    "feathers-swagger": "^0.7.2",
     "feathers-vuex": "^1.4.2",
     "form-data": "^2.3.2",
     "fuzzysort": "^1.1.1",
@@ -85,6 +85,7 @@
     <% if(resque) { %>"node-resque": "^5.3.0", <% } %>
     "notifme-sdk": "^1.6.1",
     "nuxt": "^2.0.0",
+    "pug": "^2.0.3",
     <% if(sequelize_dialect == 'postgresql') { %>"pg": "^7.4.2",  <% } %>
     <% if(sequelize_dialect == 'postgresql') { %>"pg-hstore": "^2.3.2",  <% } %>
     <% if(database == 'sql') { %>"sequelize": "^4.37.6", <% } %>

@@ -49,29 +49,16 @@ module.exports = {
       // vendor: ['iview'],
       watch: ['utils', 'components/partials/*'],
       extend(config, { isDev, isClient, isServer }) {
-        // allow less loader to execute javascript.
-        // fix for iview @ https://github.com/ant-design/ant-motion/issues/44#issuecomment-407498459
-        config.module.rules.forEach((rule) => {          
-          if (['/\\.less$/'].includes(rule.test.toString())) { // Get less loaders
-            const loader = rule.use.pop()
-            loader.options = Object.assign({}, loader.options, { javascriptEnabled: true })
-            rule.use.push(loader)
-          }
-        })
-
-        // add iview loader to allow usage of all components without require
-        let vueLoader = config.module.rules.find((rule) => rule.loader === 'vue-loader')
-        vueLoader.options.loaders.html = {
-            loader: 'iview-loader',
-            options: {
-                prefix: false
-            }
-        }
-
-        // add alias for non standard nuxt directories
-        const aliases = Object.assign(config.resolve.alias, {
-          '~utils': path.resolve(__dirname, 'src/client/utils')
-        })
+          // let vueLoader = config.module.rules.find((rule) => rule.loader === 'vue-loader')
+          // vueLoader.options.loaders.html = {
+          //     loader: 'iview-loader',
+          //     options: {
+          //         prefix: false
+          //     }
+          // }
+          const aliases = Object.assign(config.resolve.alias, {
+            '~utils': path.resolve(__dirname, 'src/client/utils')
+          })
         config.resolve.alias = aliases
       }
     },
@@ -114,6 +101,9 @@ module.exports = {
     modules: [
       // '@nuxtjs/sitemap',
       // '@nuxtjs/component-cache',
+      ['~/modules/pug'],
+      ['~/modules/less'],
+      ['~/modules/livescript'],
       [ '@nuxtjs/pwa',  {
           globPatterns: ['**/*.{js,css,svg,png,html,json}']
       }]

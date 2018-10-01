@@ -89,17 +89,18 @@ module.exports = {
       default: ''
     },
 
-    documentation: {
-      type: 'confirm',
-      message: 'Include swagger for API endpoint documentation?',
-      default: true
-    },
-
     smtp: {
       type: 'confirm',
       message: 'Set up SMPT credentials for sending emails?',
-      default: true
+      default: false
     },
+    
+    // documentation: {
+    //   type: 'confirm',
+    //   message: 'Include swagger for API endpoint documentation?',
+    //   default: true
+    // },
+
     smtp_host: {
       message: 'SMTP server host address',
       when: function({smtp}) { return !!(smtp) },

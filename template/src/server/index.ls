@@ -11,7 +11,7 @@ app = require './app' #express server with nuxt middleware serves and renders ui
 api = require './api' #feathersjs server serves data from db, fs enforcing access control
 
 process.on 'unhandledRejection', (reason, p) ->
-  logger.error 'Unhandled Rejection at: Promise ', p, reason
+  console.log 'Unhandled Rejection at: Promise ', p, reason
 
 process.on 'nuxt:build:done', (err) -> 
   logger.info 'nuxt:build:done' 
