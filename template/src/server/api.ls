@@ -10,6 +10,7 @@ validator = require 'feathers-hooks-validator'
 swagger = require 'feathers-swagger'
 logger = require 'feathers-logger'
 
+{mainStory} = require 'storyboard'
 compress = require 'compression'
 helmet = require 'helmet'
 cors = require 'cors'

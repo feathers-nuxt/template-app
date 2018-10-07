@@ -10,21 +10,13 @@
   "version": "0.0.0",
   "main": "./dist/server/main.js",
   "scripts": {
-    "migrate": "f3 migrate",
-    "seed": "f3 seed",
-    "dev": "f3 dev",
-    "build": "f3 build",
-    "build:server": "f3 build-server",
-    "build:client": "f3 build-client",
-    "deploy:staging": "f3 deploy staging",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "now-start": "node ./dist/server/main.js",
-    "start": "cross-env NODE_ENV=production node ./dist/server/main.js",
-    "deploy": "node ./scripts/deploy.js",
-    "create-admin": "node ./scripts/create-admin.js",
-    "clean": "rimraf ./dist",
-    "precommit": "run-s lint",
-    "git-push": "git add . && git commit -m 'General Update' && git push -u origin master"
+    "migrate": "npx f3 migrate",
+    "seed": "npx f3 seed",
+    "dev": "cross-env NODE_ENV=development && npx f3 dev",
+    "build": "npx f3 build",
+    "build:server": "npx f3 build-server",
+    "build:client": "npx f3 build-client",
+    "start": "cross-env NODE_ENV=production node ./dist/server/main.js"
   },
   "dependencies": {
     "@casl/ability": "^2.3.0",
