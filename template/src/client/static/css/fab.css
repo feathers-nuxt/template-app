@@ -1,46 +1,3 @@
-<template>
-  <div class="fab" v-bind:class="{ open: isOpen }" @click="openMenu">
-    <div class="overlay"></div>
-    <div class="buttons">
-      <div class="trigger"><span>+</span></div>
-      <div class="actions">
-        <div class="action">
-          <a href="/">
-            <i class="fa fa-bug"></i>
-            <div class="tooltip">App</div>
-          </a>
-        </div>
-        <div class="action">
-          <a href="/api/docs">
-            <i class="fa fa-paper-plane"></i>
-            <div class="tooltip">Swagger</div>
-          </a>
-        </div>
-        <div class="action">
-          <a href="/console.html">
-            <i class="fa fa-bug"></i>
-            <div class="tooltip">Console</div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script lang="livescript"> 
-#require '~/static/js/console.js'
-module.exports =
-  data: ->
-    isOpen: false
-  methods:
-    openMenu: -> @isOpen = !@isOpen 
-  head: ->
-    link:
-      rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'
-      ...
-</script>
-
-<style scoped>
 .fab .buttons {
   position: absolute;
   bottom: 16px;
@@ -132,4 +89,3 @@ module.exports =
   opacity: 0;
   color: #fff;
 }
-</style>

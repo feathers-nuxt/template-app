@@ -25,6 +25,12 @@
     body {
       margin:0;
       background: #fafafa;
+
+      height: 99vh;
+      overflow: hidden;
+    }
+    html {
+      overflow: hidden;
     }
   </style>
 </head>
@@ -65,7 +71,10 @@
   </defs>
 </svg>
 
-<div id="swagger-ui"></div>
+<div style="height: 99vh; overflow-y: scroll;">
+  <div id="swagger-ui"></div>
+</div>
+
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.18.3/swagger-ui-bundle.js"> </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.18.3/swagger-ui-standalone-preset.js"> </script>
@@ -156,6 +165,52 @@ window.onload = function() {
   window.ui = ui
 }
 </script>
+
+
+
+<script src="/js/console.js"></script>
+
+<link rel="stylesheet" href="/css/fab.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="fab">
+  <div class="overlay"></div>
+  <div class="buttons">
+    <div class="trigger"><span>+</span></div>
+    <div class="actions">
+      <div class="action">
+        <a href="/">
+          <i class="fa fa-bug"></i>
+          <div class="tooltip">App</div>
+        </a>
+      </div>
+      <div class="action">
+        <a href="/api/docs">
+          <i class="fa fa-paper-plane"></i>
+          <div class="tooltip">Swagger</div>
+        </a>
+      </div>
+      <div class="action">
+        <a href="/console.html">
+          <i class="fa fa-bug"></i>
+          <div class="tooltip">Console</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"> </script>
+<script>
+  $('.fab').click(function() {
+    $(this).toggleClass('open');
+  });
+</script>
+
+
 </body>
+
+
+
 
 </html>

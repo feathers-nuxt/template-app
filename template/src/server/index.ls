@@ -22,11 +22,9 @@ process.on 'nuxt:build:done', (err) ->>
     ui = await express.listen port
     api.setup ui
     api.info "app listening on http://#{host}:#{port}"
-    if process.env['NODE_ENV'] is 'development'
-      stub = require 'async-repl/stubber'
+    if process.env['NODE_ENV'] is 'development' 
       repl = require 'repl' .start 'f3 shell > ' 
       repl.context.api = api
-      stub repl
       api.info 'Type .help for repl usage guide'
   catch
     console.log e
