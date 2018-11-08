@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const {GeneralError,NotAcceptable,NotFound} = require('feathers-errors')
+const {GeneralError,NotAcceptable,NotFound} = '@feathersjs/errors'
 
 module.exports = (options) ->
   (hook) ->>

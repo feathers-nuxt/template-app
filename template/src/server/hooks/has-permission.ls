@@ -1,4 +1,4 @@
-{NotAuthenticated, GeneralError, Forbidden} = require 'feathers-errors'
+{NotAuthenticated, GeneralError, Forbidden} = require '@feathersjs/errors'
 _ = require 'lodash'
 
 module.exports = (permission) ->
