@@ -23,7 +23,7 @@ process.on 'nuxt:build:done', (err) ->>
     api.setup ui
     api.info "app listening on http://#{host}:#{port}"
     if process.env['NODE_ENV'] is 'development' 
-      repl = require 'repl' .start 'f3 shell > ' 
+      repl = require 'repl' .start 'f3 > ' 
       repl.context.api = api
       api.info 'Type .help for repl usage guide'
   catch

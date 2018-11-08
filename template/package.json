@@ -45,7 +45,7 @@
     "cors": "^2.8.4",
     "cross-env": "^5.1.5",
     "dauria": "^2.0.0",
-    "debug": "^3.1.0",
+    "debug": "^4.1.0",
     "feathers-authentication-hooks": "^0.2.0",
     "feathers-authentication-management": "^2.0.0",
     "feathers-blob": "^2.0.0",
@@ -67,7 +67,7 @@
     "iview": "^3.1.0",
     "iview-loader": "^1.2.2",
     "jwt-decode": "^2.2.0",
-    "livescript": "github:gkz/LiveScript",
+    "livescript": "^1.6.0",
     "localstorage-memory": "^1.0.2",
     "lodash": "^4.17.10",
     "multer": "^1.3.0",
@@ -81,7 +81,7 @@
     <% if(sequelize_dialect == 'postgresql') { %>"pg": "^7.4.2",  <% } %>
     <% if(sequelize_dialect == 'postgresql') { %>"pg-hstore": "^2.3.2",  <% } %>
     <% if(database == 'sql') { %>"sequelize": "^4.37.6", <% } %>
-    "serialize-error": "^2.1.0",
+    "serialize-error": "^3.0.0",
     "serve-favicon": "^2.5.0",
     "socket.io-client": "^2.1.0",    
     <% if(sequelize_dialect == 'sqlite') { %>"sqlite3": "^4.0.0", <% } %>
@@ -91,12 +91,12 @@
     "storyboard-listener-ws-client": "^3.1.1",
     "storyboard-listener-ws-server": "^3.1.1",
     <% if(sequelize_dialect == 'mssql') { %>"tedious": "^2.3.1", <% } %>
-    "uberproto": "^1.2.0",
+    "uberproto": "^2.0.4",
     "vue": "^2.5.16",
     "vue-async-computed": "^3.4.1",
     "vue-media-query-mixin": "^0.1.0",
     "vue-scrollto": "^2.11.0",
-    "vuebar": "0.0.18",
+    "vuebar": "^0.0.20",
     "vuex-router-sync": "^5.0.0",
     "winston": "^3.0.0"
   },
