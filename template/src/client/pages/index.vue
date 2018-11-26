@@ -15,13 +15,7 @@
             <i class="fa fa-paper-plane"></i>
             <div class="tooltip">Swagger</div>
           </a>
-        </div>
-        <div class="action">
-          <a href="/console.html">
-            <i class="fa fa-bug"></i>
-            <div class="tooltip">Console</div>
-          </a>
-        </div>
+        </div> 
       </div>
     </div>
   </div>

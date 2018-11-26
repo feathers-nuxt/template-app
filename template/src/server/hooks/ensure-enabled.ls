@@ -1,5 +1,5 @@
 _ = require 'lodash'
-{NotAuthenticated,Forbidden} = require 'feathers-errors'
+{NotAuthenticated,Forbidden} = require '@feathersjs/errors'
 
 module.exports = (options = {}) ->
   (hook) ->

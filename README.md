@@ -6,14 +6,19 @@ I'm also VERY interested in feedback / PRs, so send them my way or email me!
 
 ## Quick Start
 Use npx, if you do not have sao installed. npx comes bundled with npm version 5.2+.
+
 ```bash
-npx sao feathers-nuxt/template-app --update awesome-app
+npx sao npm:@feathers-nuxt/template-app --update awesome-app
 ```
-You will be prompted to answer a couple of questions to determine how the template should be customized to your needs. Sao will then clone the template in this repository and put the customized template inside `awesome-app` directory.
+
+You will be prompted to answer a couple of questions to determine how the template should be customized to your needs. 
+Sao will then clone the template in this repository and put the customized template inside `awesome-app` directory.
 
 If you already have sao installed globally, just invoke it with this template. 
+
 ```bash
-sao feathers-nuxt/template-app --update awesome-app
+sao npm:@feathers-nuxt/template-app --update awesome-app # downloads template from npm
+# sao feathers-nuxt/template-app --update awesome-app # downloads template from github
 ```
 
 ## Installation
@@ -26,17 +31,16 @@ f3 init awesome-app
 > `yarn` is preferred to `npm`, although you may use the later if you so wish.
 
 ## Usage
-Once your app is initialized do `cd awesome-app` to access your new project.
-> To start the application in development mode - watch files for changes and reload - run
+Once your app is initialized, `cd awesome-app` to access your new project.
+
+To start the application in development mode - watch files for changes and reload - run
 ```bash
 yarn dev
 ```
+If you are using an sql database ensure you run `yarn migrate up` to create necessary tables, then `yarn seed` to add test data to the database.
+> There are several other **npm scripts** defined in **package.json**. To list them all, invoke `yarn run`
 
-> There are several other `npm scripts` defined in `package.json`. To list them all, invoke
-```bash
-yarn run
-```
-### Features
+## Features
 - SSR ready PWA with offline support.
 - User Authentication and Authorization taken care of.
 - Logging mixin for Feathers app backed by winston with file and console transports.
@@ -74,7 +78,8 @@ An application initialized using `f3` will have the following directory stucture
         ├── pages                             # Vue SFC accessible via a URL    
         ├── components                        # Vue SFC to use within other SFC
         ├── layouts                           # Vue SFC to use for page layout        
-        ├── middleware                        # nuxt renderer middleware
+        ├── middleware                        # nuxt renderer middleware      
+        ├── modules                           # nuxt modules 
         ├── plugins                           # Vue.js plugins
         ├── store                             # Vuex store modules
         └── utils                             
