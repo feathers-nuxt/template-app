@@ -1,6 +1,6 @@
 {
   "name": "@feathers-nuxt/template-app",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "sao template for scaffolding feathers+nuxt apps ",
   "main": "sao.js",
   "scripts": {
