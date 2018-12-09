@@ -1,4 +1,5 @@
 import decode from 'jwt-decode'
+const { AbilityBuilder } = require('@casl/ability')
 
 export default function(options) {
   const authDefaults = {
@@ -17,19 +18,53 @@ export default function(options) {
   }
 
   const accessToken = readCookie(req.headers.cookie, cookieName)
-  const payload = getValidPayloadFromToken(accessToken)
+  if(accessToken) {    
+    return req.api.authenticate('jwt', {})(req)
+      .then(async (result = {}) => {
+        if (result && result.success == true) {
+          const {user, payload} = result.data
+          user.profile = user.user  
+          const {token} = user
+          delete user.user
+          authorize(user)
 
-  if (payload) {
-    commit(`${moduleName}/setAccessToken`, accessToken)
-    commit(`${moduleName}/setPayload`, payload)
+          // // Since we are rendering on the server we have to pass the authenticated user
+          // // from `req.user` as `params.user` to our services
+          // const params = {
+          //   user, query: {}
+          // };
+          // // Find the list of users
+          // const users = await req.api.service('proxyshortcodes').find(params);
+   
+          commit(`${moduleName}/setAuthenticatePending`)
+          commit(`${moduleName}/setAccessToken`, token)
+          commit(`${moduleName}/setPayload`, payload)
+          commit(`${moduleName}/setUser`, user)
+          commit(`${moduleName}/unsetAuthenticatePending`)
+
+          req.api.info(`DONE @initAuth:authenticate  `) 
+        } else {
+          // authentication failed
+          req.api.warn(`FAIL @initAuth:authenticate`) 
+          if(result.challenge.code == 404) {
+            commit(`${moduleName}/setAuthenticateError`, result)
+
+          }
+        }
+      }).catch((error) => { 
+          // authentication request failed
+          req.api.error(`FAIL @initAuth:authenticate request`)
+      })
+  } else {
+    req.api.warn(`BAIL @initAuth:authenticate cookie missing` ) 
   }
-  return Promise.resolve(payload)
+
+
 }
 
 // Reads and returns the contents of a cookie with the provided name.
 function readCookie(cookies, name) {
   if (!cookies) {
-    console.log('no cookies found')
     return undefined
   }
   var nameEQ = name + '='
@@ -62,3 +97,24 @@ function getValidPayloadFromToken(token) {
 function payloadIsValid(payload) {
   return payload && payload.exp * 1000 > new Date().getTime()
 }
+
+
+function defineRulesFor(user){
+  var ref$, rules, can, i$, len$, module, actions, j$, len1$, action;
+  ref$ = AbilityBuilder.extract(), rules = ref$.rules, can = ref$.can;
+  if (user.permissions && typeof user.permissions === 'object') {
+    for (i$ = 0, len$ = (ref$ = Object.keys(user.permissions)).length; i$ < len$; ++i$) {
+      module = ref$[i$];
+      actions = eval('(' + user.permissions[module] + ')');
+      for (j$ = 0, len1$ = actions.length; j$ < len1$; ++j$) {
+        action = actions[j$];
+        can(action, module);
+      }
+    }
+  }
+  return rules;
+};
+
+function authorize(user){
+  user.authorization = defineRulesFor(user);
+};

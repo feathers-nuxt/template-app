@@ -1,5 +1,3 @@
-
-
 const openProfilerStory = (context) => {
   const {app, path, method, params} = context
   if (!params.query) { params.query = {} }
@@ -18,16 +16,34 @@ const closeProfilerStory = (context) => {
 
 const dispatchToVuex = (context) => {
   const {app} = context
-  app.app.store.commit('crash/setError', context.error)
-  // app.app.nuxt.error(context.error)
+  console.log(' catch api request error ', context.error)
+  // app.app.store.commit('crash/setError', context.error)
+  context
+}
+
+const discardUser = (context) => {
+  // don't send user in request params while client side
+  if(context.params) delete context.params.user
+  // context.result = 'discardUser'
+  context
+}
+
+const getFromCache = (context) => {
+  // respond with content from local cache
+  // context.result = 'discardUser'
   context
 }
 
 export default {
   before: {
-    all: [openProfilerStory],
+    all: [
+      // openProfilerStory
+      discardUser
+    ],
     find: [],
-    get: [],
+    get: [
+      getFromCache
+    ],
     create: [],
     update: [],
     patch: [],
@@ -54,7 +70,9 @@ export default {
     remove: []
   },
   finally: {
-    all: [closeProfilerStory],
+    all: [
+      // closeProfilerStory
+    ],
     find: [],
     get: [],
     create: [],

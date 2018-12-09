@@ -3,6 +3,11 @@ host: 127.0.0.1
 port: 3030
 protocal: http
 public: "../../client/static"
+logger:
+  dir: "../../../logs"
+  levels:
+    - error
+    - info
 paginate:
   default: 10
   max: 50

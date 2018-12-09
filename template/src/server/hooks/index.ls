@@ -1,14 +1,31 @@
 _ =  require('feathers-hooks-common')
 authentication = require '@feathersjs/authentication'
 
-logger = require './logger'
+PrettyError = require('pretty-error') 
+
+logger = ->
+  (hook) ->
+    action = hook.type
+    action = 'initiated' if hook.type is 'before' 
+    action = 'completed' if hook.type is 'after' 
+    action = 'cancelled' if hook.type is 'error' 
+    message = "HOOK #{action} #{hook.method.to-upper-case!} #{hook.path}"
+    console.log "\n" if hook.params.provider and hook.type is 'before' 
+    if hook.type is 'error'
+      hook.app.error message
+      console.log (new PrettyError()).render(hook.error)
+    else
+      hook.app.info message
+    # hook.app.debug 'hook.data', hook.data
+    # hook.app.debug 'hook.params', hook.params
+    # hook.app.debug 'hook.result', hook.result if hook.result
+    hook
 
 openProfilerStory = (context) ->
   {app, path, method, params, service} = context
   clientStories = if params.query and params.query.storyId then Array.of params.query.storyId else void
   story = src: 'server' title: "#{method} /#{path}" level: 'DEBUG' extraParents: clientStories
-  app.storyboard[path] = app.storyboard.mainStory.child story
-  app.storyboard.path = path
+  app.storyboard[path] = app.storyboard.profiler = app.storyboard.mainStory.child story
   # console.log '@@@@@@@@@@@@@@@@openProfilerStory', params.query
   delete params.query.storyId if params.query and params.query.storyId
   context
@@ -34,17 +51,20 @@ setParamsForRestProxy = (context) ->>
       delete query.$skip 
   context
 
-authenticationIsNecessary = (hook) -> 
-  authPath = hook.app.get('authentication').path
-  authManagementPath = 'authManagement'
-  hook.params.provider and hook.path isnt authPath and hook.path isnt authManagementPath 
+authenticationRequired = (hook) -> 
+  whitelist = Array.of hook.app.get('authentication').path, 'proxyauth', 'alerts'
+  #hook.params.provider and hook.path isnt hook.app.get('authentication').path and hook.path isnt 'proxyauth' and hook.path isnt 'proxyauth'
+  hook.params.provider and not whitelist.includes hook.path
 
 module.exports =
   before: 
     all: [
-      # logger!
-      openProfilerStory
-      _.when authenticationIsNecessary, authentication.hooks.authenticate [ 'jwt' ]
+      logger!
+    #   openProfilerStory
+      _.when(
+        authenticationRequired,
+        authentication.hooks.authenticate [ 'jwt' ]
+      )
       # setParamsForRestProxy
     ]
     find: []
@@ -54,8 +74,7 @@ module.exports =
     patch: []
     remove: []
   after: 
-    all: [
-      # logger!
+    all: [ 
     ]
     find: []
     get: []
@@ -74,8 +93,8 @@ module.exports =
     remove: []
   finally: 
     all: [
-      # logger!
-      closeProfilerStory
+    #   closeProfilerStory
+      logger!
     ]
     find: []
     get: []

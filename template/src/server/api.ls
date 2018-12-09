@@ -1,70 +1,28 @@
-path = require 'path'
-
-configuration = require '@feathersjs/configuration'
 feathers = require '@feathersjs/feathers'
-socketio = require '@feathersjs/socketio'
 express = require '@feathersjs/express'
 
-validator = require 'feathers-hooks-validator'
-{profiler}  = require 'feathers-profiler'
-swagger = require 'feathers-swagger'
-logger = require 'feathers-logger'
+winston = require './utils/winston'  
 
-{mainStory} = require 'storyboard'
-compress = require 'compression'
-helmet = require 'helmet'
-cors = require 'cors'
+{json, urlencoded, rest, errorHandler} = express
 
-storyboard = require './utils/storyboard'
-chain = require './utils/async-chain'
-winston = require './utils/winston'
+module.exports = api = express feathers! # Create feathers instance and make it compatible with express v4+
 
-global = require './hooks/global'
-services = require './services'
-channels = require './channels'
+<% if(database == 'sql') { %>api.configure require './db/orm' # set up sequelize db connection <% } %>
+<% if(resque) { %>api.configure require './jobs' # set up persistent background jobs <% } %>
 
-<% if(resque) { %>jobs = require './jobs'<% } %>
-<% if(database == 'sql') { %>orm = require './db/orm'<% } %>
+api.configure (require '@feathersjs/configuration')! # Load configuration parameters into app instance
+api.configure (require 'feathers-hooks-validator')! # Validate request bodies against service schema
+api.configure (require 'feathers-logger') winston # Add .info .error .warn etc for invoking winston
 
-api = chain!
+api.use (require 'cors')! # Enable Cross-origin resource sharing
+api.use (require 'helmet')! # Add HTTP response headers for security
+api.use json limit: '10mb' # Parse every request body with JSON payload
+api.use urlencoded limit: '10mb' extended: true # Parse request bodies with urlencoded payload
 
-# need to bypass the chain here
-# config = configuration().bind(global)() 
+api.configure rest! # Register transport to avail services via REST
+api.configure require './services' # Register feathers services
+api.configure require './channels' # Register channels 
 
-/* End to End logging to file and console ( DEV env only ) */
-{consoleListener, wsServerListener} = storyboard
-api.configure logger winston # feathers logger mixin using winston
-api.configure consoleListener # storyboard console listener. dev only?
-api.configure socketio wsServerListener api #storyboard websocket listener
+api.use errorHandler logger: winston # Catch and log all errors 
 
-api.use cors!
-api.use helmet!
-api.use compress!
-api.use express.json limit: '10mb' # accept JSON payloads
-api.use express.urlencoded limit: '10mb' extended: true # accept multipart form payloads
-
-api.configure configuration!
-api.configure express.rest!
-api.configure validator!
-
-<% if(database == 'sql') { %>api.configure orm # set up sequelize db connection <% } %>
-<% if(resque) { %>api.configure jobs # set up persistent background jobs <% } %>
-
-api.configure swagger docsPath: '/docs', basePath: '/api', uiIndex: path.resolve __dirname, '../client/static/docs.html'
-
-api.configure services # see services directory
-api.configure channels # see channels.ls
-
-# profiler must be configured after all services
-api.configure profiler stats: 'detail', logger: log: (payload) -> mainStory.trace 'profiler' payload
-
-api.use express.notFound!
-api.use express.errorHandler logger: winston
-
-api.hooks global
-
-ready = api.chain express feathers!
-
-module.exports = new Proxy api, {
-	get: (target, name) -> if name is 'ready' then ready else target[name]
-}
+api.hooks require './hooks' # Register global application hooks

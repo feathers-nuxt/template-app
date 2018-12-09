@@ -14,13 +14,15 @@ subjectName = (subject) ->
 
 defineRulesFor = (user) ->
   { rules, can } = AbilityBuilder.extract!
-  can 'view'    <[ reports ]>
-  can 'create'  <[ authentication ]>
-  can 'read'    <[ useraccounts messages ]>
-  can 'create'  <[ contacts ]> if Object.keys(user.authorization).includes 'contacts' and user.authorization.contacts.includes 'create'
+  if user.permissions and typeof user.permissions is 'object'
+    for module in Object.keys user.permissions 
+      #actions = user.permissions[module]
+      actions = eval '(' + user.permissions[module] + ')'
+      for action in actions
+        can action, module
   rules
 
-defineAbilityFor = (user) ->
+defineAbilitiesFor = (user) ->
   rules = defineRulesFor user
   # if user
     # can 'manage', ['contacts', 'messages'], {createdBy: user._id}
@@ -31,21 +33,16 @@ canReadQuery = (query) -> query isnt null
 
 module.exports = (name) ->
   (hook) ->> 
-    hook.result.useraccount.authorization =
-      partners: <[ create read update delete ]>
-      messages: <[ create read cancel reschedule export ]>
-      reports: <[ create read ]>
-      contacts: <[ create read update delete archive ]>
     action = hook.method
     service = if name then hook.app.service name else hook.service
     serviceName = name or hook.path
-    rules = defineRulesFor hook.result.useraccount
-    ability = defineAbilityFor hook.result.useraccount
+    rules = defineRulesFor hook.result.user
+    ability = defineAbilitiesFor hook.result.user
     throwUnlessCan = (action, resource) ->
-      throw new Forbidden "You are @@@@@@@@@@@@@@@@@@@@ not allowed to #{action} #{serviceName}" if ability.cannot action, resource
+      throw new Forbidden "You are not allowed to #{action} #{serviceName}" if ability.cannot action, resource
       return 
     hook.params.ability = ability
-    hook.result.useraccount.rules = rules
+    hook.result.user.authorization = rules
     if hook.method is 'create'
       hook.data[TYPE_KEY] = serviceName
       #throwUnlessCan 'create' hook.data

@@ -1,30 +1,20 @@
-path = require 'path'
+# https://docs.feathersjs.com/api/configuration.html
+process.env['NODE_CONFIG_DIR'] = (require 'path').join __dirname, 'config/'
 
-process.env['STORYBOARD'] = "*:*" # https://github.com/guigrpa/storyboard#log-filtering
-process.env['NODE_CONFIG_DIR'] = path.join __dirname, 'config/' # https://docs.feathersjs.com/api/configuration.html
+api = require './api' # serve data as json
 
-logger = require './utils/winston'
-express = require './app' #express server with nuxt middleware serves and renders ui app
-feathers = require './api' #feathers server abstracts data from db, fs enforcing access control
+app = (require '@feathersjs/express')! # express instance to namespaced route paths
+api.use (require 'compression')! # Compress response bodies so as to lessen size of payload
+app.use '/api', api # mount feathers instance as express sub-app to serve routes prefixed with /api
+app.use (require 'cookie-parser')!, (require './middleware') api # nuxt middleware to serve all other routes
 
-process.on 'unhandledRejection', (reason, p) ->
-  console.log 'Unhandled Rejection at: Promise ', p, reason
+process.on 'unhandledRejection', (reason, p) -> console.log 'Unhandled Rejection ', p, reason
 
 process.on 'nuxt:build:done', (err) ->>
-  logger.info 'nuxt:build:done' 
-  if err
-    console.log e
-    process.exit 1
+  console.log err and process.exit err if err
   try
-    api = await feathers.ready
-    host = api.get 'host'
-    port = api.get 'port'
-    ui = await express.listen port
-    api.setup ui
-    api.info "app listening on http://#{host}:#{port}"
-    if process.env['NODE_ENV'] is 'development' 
-      repl = require 'repl' .start 'f3 > ' 
-      repl.context.api = api
-      api.info 'Type .help for repl usage guide'
+    api.setup await app.listen api.get 'port'
+    api.info "OK app listening on http://#{api.get('host')}:#{api.get('port')}"
+    api.info "OK pid: #{process.pid} environment: #{process.env['NODE_ENV']}"
   catch
-    console.log e
+    console.log e and process.exit e

@@ -1,1 +1,0 @@
-Components in this folder provide a workaround for [this error](https://github.com/nuxt/nuxt.js/issues/3375)
