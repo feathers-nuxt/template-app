@@ -1,5 +1,3 @@
-debug = (require 'debug') 'notifications-service'
-
 createService = require '@feathers-nuxt/feathers-notifme'
 
 hooks = require './notifications.hooks'

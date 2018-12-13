@@ -1,4 +1,3 @@
-path = require 'path'
 Sequelize = require 'sequelize'
 
 Op = Sequelize.Op
@@ -38,7 +37,7 @@ operatorsAliases =
     $values: Op.values,
     $col: Op.col
 
-module.exports = ->>
+module.exports = ->
   app = @
 
   {sequelize: config} = app.get 'database'

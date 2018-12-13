@@ -1,7 +1,7 @@
 html
   heml
     head
-      subject  Welcome to Tendapa 
+      subject  Welcome to <%= name %>  
       style.
         .shaded {            
             background-color: #f1f2f3;
@@ -70,69 +70,69 @@ html
       container
         row
           p.logo
-            img(src='https://www.tendapa.co.ke/png/tendapa-logo-white.png', alt='tendapa-logo-white')
+            img(src='/logo.png', alt='some image')
         row.padded
           p
-            h1.centered.heading Welcome  #{name}
+            h1.centered.heading Welcome to #{name}
           p
-            h3.centered.heading We will notify you soon to start selling
+            h3.centered.heading Lorem Ipsum dolorLorem Ipsum dolor
           p
-            .centered.heading Its what you need to kickstart and grow your business
+            .centered.heading Lorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolor Lorem Ipsum dolor
         row.shaded
             row
                 column
                     .card
                         .bordered
                             .imgholder
-                                img(src='https://www.tendapa.co.ke/png/meet-new-customers.png', alt='tendapa-logo-white')
+                                img(src='/logo.png', alt='some image')
                             .narative
-                                h5.centered.subheading Meet New Customers
-                                p.centered.subheading Connect with new customer and chat instantly  
+                                h5.centered.subheading Lorem Ipsum dolor
+                                p.centered.subheading Lorem Ipsum doloLorem Ipsum dolor Lorem Ipsum doloLorem Ipsum dolor  
                 column
                     .card
                         .bordered
                             .imgholder
-                                img(src='https://www.tendapa.co.ke/png/pay-on-delivery.png', alt='tendapa-logo-white')
+                                img(src='/logo.png', alt='some image')
                             .narative
-                                h5.centered.subheading Receive and deliver orders
-                                p.centered.subheading Receive orders through yoyr store and get paid after delivery
+                                h5.centered.subheading Lorem Ipsum dolor
+                                p.centered.subheading Lorem Ipsum dolLorem Ipsum dolor Lorem Ipsum doloLorem Ipsum dolor
                 column
                     .card
                         .notbordered
                             .imgholder
-                                img(src='https://www.tendapa.co.ke/png/increase-your-sales.png', alt='tendapa-logo-white')
+                                img(src='/logo.png', alt='some image')
                             .narative
-                                h5.centered.subheading Increase your sales
-                                p.centered.subheading Sell more products to a larger online market 
+                                h5.centered.subheading Lorem Ipsum dolor
+                                p.centered.subheading Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolorLorem Ipsum dolor
             row
                 column
                     .card
                         .bordered
                             .imgholder
-                                img(src='https://www.tendapa.co.ke/png/grow-your-brand.png', alt='tendapa-logo-white')
+                                img(src='/logo.png', alt='some image')
                             .narative
-                                h5.centered.subheading Grow your own brand
-                                p.centered.subheading Share your product catalog to grow your awareness and identity 
+                                h5.centered.subheading Lorem Ipsum dolor
+                                p.centered.subheading Lorem Ipsum dolrLorem Isum dolorLorem Ipsum dolLorem Ipsm dolor
                 column
                     .card
                         .bordered
                             .imgholder
                                 img(src='https://www.tendapa.co.ke/png/manage-your-stock.png', alt='manage-your-stock')
                             .narative
-                                h5.centered.subheading Manage your stock
-                                p.centered.subheading Receive orders through your store and get paid after delivery
+                                h5.centered.subheading Lorem Ipsum dolor
+                                p.centered.subheading Lorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolor
                 column(valign="middle")
                     .card
                         .notbordered
                             .imgholder
-                                img(src='https://www.tendapa.co.ke/png/stay-connected.png', alt='tendapa-logo-white')
+                                img(src='https://www.tendapa.co.ke/png/stay-connected.png', alt='some image')
                             .narative
-                                h5.centered.subheading Stay connected to your customers
-                                p.centered.subheading Understand your customers' needs better and build trust 
+                                h5.centered.subheading Lorem Ipsum dolor
+                                p.centered.subheading Lorem Ipsum dolorLorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolor
         row
           column
             h2.centeredpadded See you in a bit
         row
           column
             footer
-                | @Tendapa 2017. All rights reserved
+                | @<%= name %> 2018. All lefts reversed

@@ -23,14 +23,13 @@ export default async function(ctx) {
   if(process.client) { // on browser pocess only
 
     const { app, nuxtState } = ctx
-    const { config } = nuxtState
-    const { host, port } = config
+    const { protocol, host, port } = nuxtState.config
     const storage = window.localStorage
 
     const feathersClient = feathers()
 
     feathersClient.hooks(hooks)
-    feathersClient.configure(rest(`http://${host}:${port}/api`).axios(app.$axios))
+    feathersClient.configure(rest(`${protocol}://${host}:${port}/api`).axios(app.$axios))
     feathersClient.configure(authentication({ storage, service: 'logins', jwtStrategy: 'jwt', path: '/authentication' }))
 
     // automatically logout once jwt expires
@@ -39,15 +38,14 @@ export default async function(ctx) {
     // automatically navigate to login page after logout
     feathersClient.on('logout', () => app.router.push({ path: '/' })  )
 
+    const deleteCookie = (name) => document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+    
     // logout if token invalidated
     if(app.store.state.auth.errorOnAuthenticate) {
-      var delete_cookie = (name) => document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-
       feathersClient.logout().then(() => {
-        delete_cookie('feathers-jwt')
+        deleteCookie('feathers-jwt')
         app.store.commit(`auth/clearAuthenticateError`)
       })
-
     }
 
     return feathersClient

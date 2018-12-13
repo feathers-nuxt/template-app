@@ -1,6 +1,6 @@
 <template lang="pug">
 Header(:style="{background: '#fff', padding: '0px 10px', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}")
-    IviewMenu.topnav(mode='horizontal', theme='light', active-name='1' )
+    Menu.topnav(mode='horizontal', theme='light', active-name='1' )
         .layout-logo
             Icon(:type="menuicon"  v-if="windowWidth < 1300" @click='toggleSider')
             .logoanchor(@click="hardReload")
@@ -51,11 +51,8 @@ Header(:style="{background: '#fff', padding: '0px 10px', boxShadow: '0 2px 3px 2
 </style>
 
 <script lang="livescript">
-IviewMenu = require "~/components/iview/IviewMenu"
 module.exports =
   props: <[ showSider ]>
-  components:
-    IviewMenu: IviewMenu.default
   computed:
     menuicon: ->
       if @showSider then 'close-round' else 'navicon-round'

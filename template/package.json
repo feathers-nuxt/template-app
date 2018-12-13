@@ -29,6 +29,7 @@
     "@casl/ability": "^2.5.1",
     "@casl/vue": "^0.5.0",
     "@feathers-nuxt/cli": "^1.1.8",
+    "@feathers-nuxt/feathers-notifme": "^1.0.1-beta.1",
     "@feathersjs/authentication": "^2.1.13",
     "@feathersjs/authentication-client": "^1.0.8",
     "@feathersjs/authentication-jwt": "^2.0.7",
@@ -46,30 +47,35 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
     "dauria": "^2.0.0",
-    "feathers-hooks-common": "^4.17.14",
-    <% if(cache) { %>"feathers-hooks-rediscache": "^1.1.3", <% } %>
+    "feathers-authentication-hooks": "^0.3.1",
+    "feathers-authentication-management": "^2.0.1",
+    "feathers-hooks-common": "^4.17.14", <% if(cache) { %>
+    "feathers-hooks-rediscache": "^1.1.3", <% } %>
     "feathers-hooks-validator": "github:kharhys/feathers-hooks-validator",
-    "feathers-logger": "^0.3.2",    
-    <% if(database == 'memory') { %>"feathers-memory": "^2.1.3", <% } %>
-    <% if(database == 'embedded') { %>"feathers-nedb": "^3.1.0", <% } %>
-    <% if(database == 'sql') { %>"feathers-sequelize": "^3.1.0", <% } %>
+    "feathers-logger": "^0.3.2", <% if(database == 'memory') { %>
+    "feathers-memory": "^2.1.3", <% } %> <% if(nosql_dialect == 'mongodb') { %>
+    "feathers-mongoose": "^6.3.0", <% } %> <% if(database == 'embedded') { %>
+    "feathers-nedb": "^3.1.0", <% } %> <% if(database == 'sql') { %>
+    "feathers-sequelize": "^3.1.0", <% } %>
     "form-data": "^2.3.3",
     "helmet": "^3.15.0",
+    "heml": "^1.1.3",
     "into-stream": "^4.0.0",
-    "iview": "^3.1.4",    
-    <% if(sequelize_dialect == 'mysql') { %>"mysql": "^2.15.0", <% } %> 
-    <% if(database == 'file') { %>"nedb": "^1.8.0", <% } %>    
-    <% if(resque) { %>"node-resque": "^5.3.0", <% } %>
+    "iview": "^3.1.4", <% if(nosql_dialect == 'mongodb') { %>
+    "mongoose": "^5.3.15", <% } %> <% if(sequelize_dialect == 'mysql') { %>
+    "mysql": "^2.15.0", <% } %>  <% if(database == 'file') { %>
+    "nedb": "^1.8.0", <% } %>  <% if(resque) { %>
+    "node-resque": "^5.3.0", <% } %>
     "nuxt": "^2.2.0",
-    "nuxt-robots-module": "^1.3.0",
-    <% if(sequelize_dialect == 'postgresql') { %>"pg": "^7.4.2",  <% } %>
-    <% if(sequelize_dialect == 'postgresql') { %>"pg-hstore": "^2.3.2",  <% } %>
-    <% if(database == 'sql') { %>"sequelize": "^4.37.6", <% } %>
+    "nuxt-robots-module": "^1.3.0", <% if(sequelize_dialect == 'postgresql') { %>
+    "pg": "^7.4.2",  <% } %> <% if(sequelize_dialect == 'postgresql') { %>
+    "pg-hstore": "^2.3.2",  <% } %> <% if(database == 'sql') { %>
+    "sequelize": "^4.37.6", <% } %>
     "passport-custom": "^1.0.5",
     "pretty-error": "^2.1.1",
-    "serve-favicon": "^2.5.0",
-    <% if(sequelize_dialect == 'sqlite') { %>"sqlite3": "^4.0.0", <% } %>
-    <% if(sequelize_dialect == 'mssql') { %>"tedious": "^2.3.1", <% } %>
+    "serve-favicon": "^2.5.0", <% if(sequelize_dialect == 'sqlite') { %>
+    "sqlite3": "^4.0.0", <% } %> <% if(sequelize_dialect == 'mssql') { %>
+    "tedious": "^2.3.1", <% } %>
     "vue-media-query-mixin": "^0.1.0",
     "vuex-router-sync": "^5.0.0",
     "winston": "^3.1.0"

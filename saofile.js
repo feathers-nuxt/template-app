@@ -1,4 +1,4 @@
-// type Defaults: input - Possible values: input, confirm, list, rawlist, expand, checkbox, password, editor
+// uncomment below 
 
 // (function() {
 //   var childProcess = require("child_process");
@@ -16,6 +16,7 @@ module.exports = {
   description: 'Scaffold a feathers+nuxt project',
   prompts() { 
     return [
+      /* About project */
       {
         name: 'name',
         message: 'What is the name of the new project?',
@@ -27,18 +28,53 @@ module.exports = {
         default: `feathers nuxt fullstack`
       },
 
+      /* Database type */
       {
         name: 'database',
         message: 'What type of database will you be using',
         type: 'list',
         choices: [
-          // { name: 'Memory Storage', value: 'memory', short: 'memory' },
-          // { name: 'File Storage', value: 'file', short: 'file' },
+          { name: 'Memory Storage', value: 'memory', short: 'memory' },
+          { name: 'File Storage', value: 'file', short: 'file' },
           { name: 'SQL (Relational) Database', value: 'sql', short: 'sql' },
-          // { name: 'NoSQL (Document) Database', value: 'nosql', short: 'nosql' }
+          { name: 'NoSQL (Document) Database', value: 'nosql', short: 'nosql' }
         ],
         default: 'sql'
       },
+
+      /* Document DB */
+      {
+        name: 'nosql_dialect',
+        message: 'What dialect of Document database will you be using',
+        when: function({database}) { return database == 'nosql' },
+        type: 'list',
+        choices: [
+          { name: 'MongoDB', value: 'mongodb', short: 'mongodb' },
+          // { name: 'CouchDB', value: 'couchdb', short: 'couchdb' },
+          // { name: 'Cassandra', value: 'cassandra', short: 'cassandra' }
+        ],
+        default: 'mongodb'
+      },
+      {
+        name: 'nosql_host',
+        message: 'Document Database host',
+        when: function({database}) { return database == 'nosql' },
+        default: '127.0.0.1'
+      },
+      {
+        name: 'nosql_port',
+        message: 'Document Database port',
+        when: function({database}) { return database == 'nosql' },
+        default: '27017'
+      },
+      {
+        name: 'nosql_database',
+        message: 'Document Database name',
+        when: function({database}) { return database == 'nosql' }
+      },
+
+
+      /* Relational DB */
       {
         name: 'sequelize_dialect',
         message: 'What dialect of SQL database will you be using',
@@ -80,6 +116,7 @@ module.exports = {
         when: function({database}) { return database == 'sql' }
       },
 
+      /* Cache DB */
       {
         name: 'cache',
         type: 'confirm',
@@ -116,18 +153,14 @@ module.exports = {
         when: function({cache, resque}) { return !!(cache || resque) },
         default: ''
       },
+
+      /* SMTP Mailer */
       {
         name: 'smtp',
         type: 'confirm',
         message: 'Set up SMPT credentials for sending emails?',
         default: false
-      },    
-      {
-        name: 'documentation',
-        type: 'confirm',
-        message: 'Include swagger for API endpoint documentation?',
-        default: true
-      },
+      }, 
       {
         name: 'smtp_host',
         message: 'SMTP server host address',
@@ -152,6 +185,16 @@ module.exports = {
         when: function({smtp}) { return !!(smtp) },
         default: '5trong3r'
       },
+
+      /* API Documentation */
+      {
+        name: 'documentation',
+        type: 'confirm',
+        message: 'Include swagger for API endpoint documentation?',
+        default: true
+      },
+
+      /* Version Control */
       {
         name: 'username',
         message: 'What is your GitHub username?',
@@ -180,13 +223,15 @@ module.exports = {
         files: '**',
         filters: {
           'src/server/jobs/*': 'resque',
-          'src/server/db/orm.ls': "database == 'sql'"
+          'src/server/db/sequelize-orm.ls': "database == 'sql'",
+          'src/server/db/mongoose-orm.ls': "database == 'nosql'"
         }
       },
       {
         type: 'move',
         patterns: {
-          'gitignore': '.gitignore'
+          'gitignore': '.gitignore',
+          'src/server/db/*-orm.ls': 'src/server/db/orm.ls'
         }
       }
     ]

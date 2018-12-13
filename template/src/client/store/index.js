@@ -1,38 +1,40 @@
-import Vue from 'vue'
-import decode from 'jwt-decode'
+import { initAuth } from '~utils'
 import { sync } from 'vuex-router-sync'
-
-// import { initAuth, initClient } from '~utils'
-import { initClient } from '~utils'
-import { initAuth } from 'feathers-vuex'
 
 export const actions = {
 
 	// this function runs on server side only
-	async nuxtServerInit (store, ctx) {
-		const { commit, dispatch } = store
+	async nuxtServerInit (store, ctx) { 
+
+		// const { commit, dispatch } = store
 		const { req, beforeNuxtRender } = ctx
+
+		req.api.log({ level: 'silly', message: `${req.method} HTTP ${req.httpVersion}` })
+		req.api.info(`INIT @nuxtServerInit ${req.url}` )
 
 		// synchronise vue router state with vuex store state
 		sync(ctx.app.store, ctx.app.router)
 
-    const config = {
-      host: req.api.get('host'),
-      port: req.api.get('port')
-    }
+		ctx.app.store.commit("config/setLogo", "/logo.png")
 
-    // pass in params from server to client 
-    beforeNuxtRender(({ nuxtState }) => {
-      nuxtState.config = config
-      nuxtState.services = Object.keys(req.api.services)
-    })
+		req.api.info(`FORK @nuxtServerInit CALL initAuth` )
 
-    ctx.config = config
-    
-		// setup feathersClient for SSR
-		await initClient(ctx)
-
-		return initAuth
+		// retrive user from cookie token into vuex state
+		await initAuth({ req, commit: ctx.app.store.commit })
+		
+		const config = { 
+			protocol: req.api.get('protocol'), 
+			host: req.api.get('domain'), 
+			port: req.api.get('port') 
+		}
+		
+		// pass in params from server to client 
+		beforeNuxtRender(async ({ nuxtState }) => { 
+			nuxtState.config = config
+			nuxtState.services = Object.keys(req.api.services)
+		})
+		
+		req.api.info(`DONE @nuxtServerInit ` )
 	}
 	
 }

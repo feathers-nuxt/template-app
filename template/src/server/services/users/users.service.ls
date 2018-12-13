@@ -1,4 +1,4 @@
-createService = require 'feathers-sequelize'
+createService = require <% if(database == 'sql'){%>'feathers-sequelize'<%}else{%>'feathers-mongoose'<%}%>
 
 createModel = require './users.model'
 hooks = require './users.hooks'

@@ -1,29 +1,23 @@
 <template lang='pug'>
-IviewMenu(:active-name='current' :open-names='opensections' theme='light' width='auto' v-on:on-select='navigateTo' accordion)
-  IviewMenuItem(name='mail-compose', style='background: #f3f3f3')
+Menu(:active-name='current' :open-names='opensections' theme='light' width='auto' v-on:on-select='navigateTo' accordion)
+  MenuItem(name='mail-compose', style='background: #f3f3f3')
     Button(type='primary', shape='circle', class='compose_btn')
       Icon(type='compose', style='color: #fff; margin-right: 1rem')
       | Compose
-  IviewSubmenu(name='mail', v-if="$can('read', 'mail')")
+  Submenu(name='mail', v-if="$can('read', 'mail')")
     template(slot='title')
       Icon(type='ios-email')
       | Inbox
-    IviewMenuItem(name='mail-drafts')
+    MenuItem(name='mail-drafts')
       | Drafts
-  IviewMenuItem(name='settings', v-if="$can('view', 'settings')")
+  MenuItem(name='settings', v-if="$can('view', 'settings')")
     Icon(type='stats-bars')
     |  Settings
 </template>
 
 <script>
 
-import IviewMenu from "~/components/iview/IviewMenu";
-import IviewSubmenu from "~/components/iview/IviewSubmenu";
-import IviewMenuItem from "~/components/iview/IviewMenuItem";
-import IviewMenuGroup from "~/components/iview/IviewMenuGroup";
-
 export default {
-  components: { IviewMenu, IviewSubmenu, IviewMenuItem, IviewMenuGroup },
   computed : {
     current() {
       let name = this.$store.state.route.name

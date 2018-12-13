@@ -1,22 +1,32 @@
-import Vue from 'vue'
 import { initClient } from '~utils'
 
-import * as storyboard from 'storyboard';
-import feathersVuex from 'feathers-vuex';
+export default async (ctx, inject) => {
+  let api // feathers server or client instance
+  if(process.server) {
+    // use feathers server instance for SSR
+    api = ctx.req.api
+  } else {
+    // use feathers rest client instance on the browser
+    api = await initClient(ctx, ctx.nuxtState.config) 
 
-export default async function (ctx) {
+    //attach app to window for easy debugging from browser console
+    if(ctx.isDev) window.app = ctx.app 
 
-  const { app, isDev } = ctx
+    // wait until nuxt is initialized
+    window.onNuxtReady(() => {
+
+      //nuxtReady event fires for HMR as well
+      //dont reinitialize feathersClient during HRM
+      if (ctx.isHMR) return
+      ctx.nuxtState.services.forEach( path => api.service(path) )
+    })
+  }
   
-  if(process.client) {
-    const feathersClient = await  initClient(ctx)    
-    const { FeathersVuex } = feathersVuex(feathersClient, { idField: 'id' })
-    Vue.use(FeathersVuex)
+  // inject feathers app to vue context
+  inject('api', api)
 
-    if(isDev) {
-      window.app = app
-      window.Vue = Vue
-    }
+  if(process.server) { 
+    ctx.req.api.info(`DONE @plugins/feathers initialized`)
   }
 
 }
